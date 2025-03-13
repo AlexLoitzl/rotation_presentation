@@ -145,36 +145,64 @@
 \section{Background}
 
 \begin{frame}{Modular I/O Reasoning}
+
+\begin{textblock}{5.5}[0,0](1.5,3)
+      \inputminted[bgcolor=codebg, fontsize=\small]{c} {code/echo.rec}
+\end{textblock}
+
+
+\only<1>{
+\begin{textblock}{20}[0,0](0,10)
+  \centering
+  \{...\} \texttt{echo} \{...\}
+\end{textblock}}
+
+\only<2>{
+\begin{textblock}{20}[0,0](0,10)
+  \centering
+  \{$\lambda$ es, ⌜es = [ ]⌝\} \texttt{echo} \{$\lambda$ v, ⌜v = 0⌝\}
+\end{textblock}}
+
+\only<3>{
+\begin{textblock}{20}[0,0](0,10)
+  \centering
+  {\LARGE\{}$\lambda$ es, ⌜es = [ ]⌝ $\ast$ {\large\{}$\lambda$ es, ⌜es = [ ]⌝{\large\}}\texttt{getc}{\large\{}$\lambda$ v, \{$\lambda$ es, ⌜es = v⌝\}\texttt{putc}\{\_\} {\large\}}{\LARGE\}}\\
+    \texttt{echo}\\
+  {\LARGE\{}$\lambda$ v, ⌜v = 0⌝{\LARGE\}}
+\end{textblock}}
+
+\only<5->{
+\begin{textblock}{20}[0,0](0,8)
+  \centering
+  \{$\lambda$ es, ⌜es = [ ]⌝ $\ast$ $\boldsymbol{\exists}$ v, P v\}
+    \texttt{getc}
+  \{$\lambda$ ret, ⌜ret = v⌝ $\ast$ P (v + 1)\}
+\end{textblock}}
+
+\only<5>{
+\begin{textblock}{20}[0,0](0,10)
+  \centering
+  \{$\lambda$ es, $\boldsymbol{\exists}$ v, ⌜es = v⌝ $\ast$ P (v + 1)\}
+    \texttt{putc}
+  \{$\lambda$ ret, P (v + 1)\}
+\end{textblock}}
+
+\only<4->{
+\begin{textblock}{20}[0,0](0,12)
+  \centering
+  \{$\lambda$ es, ⌜es = [ ]⌝ $\ast$ $\boldsymbol{\exists}$ v, P v $\ast$ (\texttt{getc\_spec} P) $\ast$ (\texttt{putc\_spec} P)\}\\
+    \texttt{echo}\\
+  \{$\lambda$ v, ⌜v = 0⌝\}
+\end{textblock}}
+
+
+
 \end{frame}
 
 \begin{frame}{Multi-language Reasoning in DimSum}
 \end{frame}
 
-\section{Project}
-\begin{frame}{Rotation Project}
-\end{frame}
-
-\begin{frame}{Summary}
-  \begin{itemize}
-    \item Formally verified compiler
-          \begin{itemize}
-            \item Proof covers all optimizations
-            \item Correct w.r.t. the modeled semantics
-          \end{itemize}
-    \item Discrepancies between hardware and model
-          \begin{itemize}
-            \item Cannot implement correct calling conventions
-            \item Cannot support TriCore architecture
-          \end{itemize}
-    \item Suboptimal code generation
-          \begin{itemize}
-            \item Inserted moves
-            \item Higher register pressure
-          \end{itemize}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Example}
+\begin{frame}{Proofs in DimSum}
   \begin{textblock}{20}[0.5,0.5](10,12)
     \begin{figure}
     \centering
