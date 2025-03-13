@@ -48,6 +48,18 @@
 }
 
 \usepackage{minted}
+\usepackage{newunicodechar}
+\newunicodechar{Π}{\ensuremath{\Pi}}
+\newunicodechar{Φ}{\ensuremath{\Phi}}
+\newunicodechar{∗}{\ensuremath{\ast}}
+\newunicodechar{⌜}{\ensuremath{\ulcorner}}
+\newunicodechar{⌝}{\ensuremath{\urcorner}}
+\newunicodechar{∃}{\ensuremath{\boldsymbol\exists}}
+\newunicodechar{κ}{\ensuremath{\kappa}}
+\newunicodechar{σ}{\ensuremath{\sigma}}
+\newunicodechar{↪}{\ensuremath{\hookrightarrow}}
+\newunicodechar{≡}{\ensuremath{\equiv}}
+\newunicodechar{□}{\ensuremath{\square}}
 \usepackage{xspace}
 \usepackage{ragged2e}
 \usepackage{pgfplots}
@@ -57,6 +69,8 @@
 \usepgfplotslibrary{groupplots}
 \usepackage{booktabs}
 \usepackage{array}
+\usepackage{xpatch}
+\usepackage[nott]{inconsolata}
 %\usepackage{beramono}
 %\usepackage[scaled=0.8]{FiraMono}
 
@@ -80,8 +94,15 @@
 
 \TPGrid[0mm,0mm]{20}{20}
 \definecolor{codebg}{HTML}{eeeeee}
+\definecolor{codegreen}{HTML}{73d216}
 \setminted{fontsize=\small, escapeinside=!!, bgcolor=codebg}
 \usemintedstyle{tango}
+
+\makeatletter
+\AtBeginEnvironment{minted}{\dontdofcolorbox}
+\def\dontdofcolorbox{\renewcommand\fcolorbox[4][]{##4}}
+\xpatchcmd{\inputminted}{\minted@fvset}{\minted@fvset\dontdofcolorbox}{}{}
+\makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -163,12 +184,133 @@
 \end{frame}
 
 \begin{frame}{Towards Hoare-style Reasoning}
-  \begin{textblock}{20}[0.5,0.5](10,12)
+  \begin{textblock}{20}[0,0](0,2)
     \begin{figure}
     \centering
     \input{verification2.tex}
     \end{figure}
   \end{textblock}
+\end{frame}
+
+\begin{frame}{(Modular) Hoare-style Reasoning}
+
+  \only<1-2>{
+  \begin{textblock}{10.5}[0,0](.5,8)
+    \begin{figure}[h]
+      \centering
+      \begin{minipage}{\textwidth}
+        \centering
+        \inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/getc_prepost1.v}
+      \end{minipage}
+    \end{figure}
+  \end{textblock}}
+
+  \only<2->{
+  \begin{textblock}{10.6}[0,0](8,4)
+    \begin{figure}[h]
+      \centering
+      \begin{minipage}{\textwidth}
+        \centering
+        \inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/real_getc_prepost.v}
+      \end{minipage}
+    \end{figure}
+  \end{textblock}}
+
+  \only<3>{
+  \begin{textblock}{12}[0,0](.5,8)
+    \begin{figure}[h]
+      \centering
+      \begin{minipage}{\textwidth}
+        \centering
+        \inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/getc_prepost.v}
+      \end{minipage}
+    \end{figure}
+  \end{textblock}}
+
+  %% \begin{textblock}{8}[0,0] (11,2)
+  %% \end{textblock}
+\end{frame}
+
+
+\begin{frame}{Example 1}
+
+  \begin{textblock}{18}[0,0](1,4)
+  \centering
+  \Large$\llbracket \textcolor{red}{\text{echo}_{\text{rec}}}\bm{\oplus} \text{getc}_{\text{spec}} \rrbracket\boldsymbol{\preceq}\llbracket \text{echo}_{\text{spec}} \rrbracket$
+  \end{textblock}
+
+  %% \only<1>{
+  %% \begin{textblock}{18}[0,0](1,6)
+  %%   \begin{figure}[h]
+  %%     \centering
+  %%     \begin{minipage}{\textwidth}
+  %%       \centering
+  %%       \inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/sim_getc_spec.v}
+  %%     \end{minipage}
+  %%   \end{figure}
+  %% \end{textblock}}
+
+  \begin{textblock}{18}[0,0](1,6)
+    \begin{figure}[h]
+      \centering
+      \begin{minipage}{\textwidth}
+        \centering
+        \only<1>{
+        \inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/sim_getc_spec.v}}
+        \only<2>{
+        \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={3-4}, highlightcolor=yellow!60]{coq} {code/sim_getc_spec.v}}
+        \only<3>{
+        \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={5-6}, highlightcolor=yellow!60]{coq} {code/sim_getc_spec.v}}
+        \only<4>{
+        \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={8-9}, highlightcolor=yellow!60]{coq} {code/sim_getc_spec.v}}
+        \only<5>{
+        \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={10-11}, highlightcolor=yellow!60]{coq} {code/sim_getc_spec.v}}
+      \end{minipage}
+    \end{figure}
+  \end{textblock}
+\end{frame}
+
+
+\begin{frame}{Example 2}
+
+  \only<1>{
+  \begin{textblock}{18}[0,0](1,4)
+  \centering
+  \Large$\llbracket \textcolor{red}{\text{echo}_{\text{rec}}}\bm{\oplus} \text{getc}_{\text{spec}} \rrbracket\boldsymbol{\preceq}\llbracket \text{echo}_{\text{spec}} \rrbracket$
+  \end{textblock}}
+
+  \only<1>{
+  \begin{textblock}{18}[0,0](1,6)
+    \begin{figure}[h]
+      \centering
+      \begin{minipage}{\textwidth}
+        \centering
+        \inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/sim_getc.v}
+      \end{minipage}
+    \end{figure}
+  \end{textblock}}
+
+  \only<2>{
+  \begin{textblock}{18}[0,0](1,3)
+    \begin{figure}[h]
+      \centering
+      \begin{minipage}{\textwidth}
+        \centering
+        \inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/sim_getc2.v}
+      \end{minipage}
+    \end{figure}
+  \end{textblock}}
+  %% \begin{textblock}{8}[0,0] (11,2)
+  %% \end{textblock}
+\end{frame}
+
+\begin{frame}{Outcome \& Takeaways}
+\begin{itemize}
+\item Lemma for \texttt{TCallRet}
+\item Keep $\Pi$s the same - new lemmas for linking
+\item Balance between Abstraction and Information
+\item Balance between Hacking and Thinking
+\end{itemize}
 \end{frame}
 
 \end{document}
