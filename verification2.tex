@@ -1,0 +1,36 @@
+\begin{tikzpicture}
+  \useasboundingbox (0,0) rectangle (12.7,8);
+
+  \node<1-> (l) at (1.7,7) {\large$\llbracket \textcolor{red}{\text{echo}_{\text{rec}}} \bm{\oplus}\text{getc}_{\text{spec}} \rrbracket$};
+
+  \node<1> (sim) at (7, 7) {\large$\boldsymbol{\preceq}$};
+  \node<1> (spec) at (11.8, 7) {\large$\llbracket \text{echo}_{\text{spec}} \rrbracket$};
+
+  \node<2->[right=-.25cm of l,align=left] (p1) {\large$\boldsymbol{\approx>}\! (\bm{\lambda} \kappa_t \sigma_t,$};
+  \node<3->[right=-.25cm of p1,align=left] (p2) {\large$\llbracket \text{echo}_{\text{spec}} \rrbracket\boldsymbol{\approx>}\! (\bm{\lambda} \kappa_s \sigma_s,$};
+  \node<4->[right=-.25cm of p2,align=left] (p3) {\large$\kappa_t = \kappa_s \ast \sigma_t \preceq \sigma_s))$};
+
+  \node<5-> (pi) at (6.25, 6) {\large$\llbracket \textcolor{red}{\text{echo}_{\text{rec}}} \bm{\oplus}\text{getc}_{\text{spec}} \rrbracket \boldsymbol{\approx>}$ \LARGE$\Pi_s$};
+
+  \node<7-> (pi2') at (6.25, 5) {\large$\llbracket \textcolor{red}{\text{echo}_{\text{rec}}}\rrbracket \boldsymbol{\approx>} (\bm{\lambda} \kappa_l \sigma_l, \mathtt{\textcolor{blue}{if}} \_ \mathtt{\textcolor{blue}{then}}\ \llbracket \text{getc}_{\text{spec}} \rrbracket \boldsymbol{\approx>} ...\ \mathtt{\textcolor{blue}{else}}\ \Pi_s \kappa_l \sigma)$};
+
+  \node<6-> (pi2) at (6.25, 4) {\large$\llbracket \textcolor{red}{\text{echo}_{\text{rec}}}\rrbracket \boldsymbol{\approx>}$ \LARGE$\Pi_{\bm{\oplus}}($\large$\Pi_s$\LARGE$)$};
+
+  \node<8-> (pi3) at (6.25, 3) {\large$\llbracket \textcolor{red}{\text{echo}_{\text{rec}}}\rrbracket \boldsymbol{\approx>}$ \LARGE$\Pi$};
+
+
+  \node<9-> (hoare) at (6.25, 2) {TGT Call \textcolor{codegreen}{``echo''} es @ $\Pi$ \{\{$\Phi$\}\}};
+    %% □ rec_fn_spec_hoare Tgt Π "getc" (getc_fn_spec P) -∗
+    %% rec_fn_spec_hoare Tgt Π "echo" (λ es POST, ∃ v, ⌜es = []⌝ ∗ P v ∗
+    %%   rec_fn_spec_hoare Tgt Π "putc" (λ es POST1, P (v + 1) ∗ ⌜es = [Val v]⌝ ∗ POST1 (λ _, P (v + 1) ∗
+    %%     rec_fn_spec_hoare Tgt Π "putc" (λ es POST2, P (v + 2) ∗ ⌜es = [Val (v + 1)%Z]⌝ ∗ POST2 (λ _, P (v + 2) ∗
+    %%       POST (λ ret, P (v + 2) ∗ ⌜ret = 0⌝)))))).
+
+  %% \node<11>[align=left] (pre) at (6.25, 1) {WP${}_{\text{TGT}}$ Call \textcolor{codegreen}{``getc} es @ $\Pi$ \{\{$\Phi$\}\}\\ (\{\{es POST, es = [ ] $\ast\ \boldsymbol{\exists} v,$ P v $\ast$\\
+  %%   POST (\{\{ret, P (v + 1)\}\})\}\})};
+
+  %% \node<12>[align=left] (pre) at (6.25, 1) {WP${}_{\text{TGT}}$ Call \textcolor{codegreen}{``echo''} es @ $\Pi$ \{\{$\Phi$\}\}(\{\{ es${}_e$ POST${}_e$, es${}_e$ = [ ] $\ast$ P v $\ast$ \}\})};
+
+  \draw (current bounding box.north east) -- (current bounding box.north west) -- (current bounding box.south west) -- (current bounding box.south east) -- cycle;
+
+\end{tikzpicture}
