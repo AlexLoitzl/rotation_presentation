@@ -1,0 +1,258 @@
+\PassOptionsToPackage{table}{xcolor}
+\documentclass[usenames,dvipsnames, table]{beamer}
+\usepackage{verbatim}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{./theme/beamerthemepresentation}
+\addtobeamertemplate{footnote}{}{\vspace{2ex}}
+\usepackage{amsmath}
+\usepackage{stmaryrd}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{mathptmx}
+\usepackage{changepage}
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage{subcaption}
+\usepackage{semantic}
+\usepackage{marvosym}
+\usepackage{bm}
+
+\usetikzlibrary{calc, arrows.meta, intersections, patterns, positioning, shapes.misc, fadings, through,decorations.pathreplacing, math}
+\usetikzlibrary{arrows,automata,positioning, calc, arrows.meta, chains, decorations.pathreplacing, shapes.geometric, shapes.arrows, shadows.blur}
+%%% Bibliography
+\usepackage[style=authoryear,backend=biber, style=alphabetic]{biblatex}
+\addbibresource{references.bib}
+
+\DeclarePairedDelimiter\Brackets{\lBrack}{\rBrack}
+
+\mode<presentation> { \setbeamercovered{transparent} }
+\setbeamertemplate{navigation symbols}{}
+\def\beamerorig@set@color{%
+  \pdfliteral{\current@color}%
+  \aftergroup\reset@color
+}
+\def\beamerorig@reset@color{\pdfliteral{\current@color}}
+\newcounter{bibitmctr}
+\newcommand{\brf}{%
+  \stepcounter{bibitmctr}%
+  \ifnum\value{bibitmctr}=5%
+    \setcounter{bibitmctr}{0}
+    \framebreak
+  \fi
+}
+
+\usepackage{minted}
+\usepackage{xspace}
+\usepackage{ragged2e}
+\usepackage{pgfplots}
+\usepackage{soul}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.16}
+\usepgfplotslibrary{groupplots}
+\usepackage{booktabs}
+\usepackage{array}
+%\usepackage{beramono}
+%\usepackage[scaled=0.8]{FiraMono}
+
+%%% Some useful commands
+% pdf-friendly newline in links
+\newcommand{\pdfnewline}{\texorpdfstring{\newline}{ }}
+% Fill the vertical space in a slide (to put text at the bottom)
+\newcommand{\framefill}{\vskip0pt plus 1filll}
+
+\renewcommand*{\bibfont}{\scriptsize}
+
+\newenvironment<>{varblock}[2][\textwidth]{%
+  \setlength{\textwidth}{#1}
+  \begin{actionenv}#3%
+    \def\insertblocktitle{#2}%
+    \par%
+    \usebeamertemplate{block begin}}
+  {\par%
+    \usebeamertemplate{block end}%
+  \end{actionenv}}
+
+\TPGrid[0mm,0mm]{20}{20}
+\definecolor{codebg}{HTML}{eeeeee}
+\setminted{fontsize=\small, escapeinside=!!, bgcolor=codebg}
+\usemintedstyle{tango}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+
+\title[Modular I/O Reasoning in DimSum]{Modular I/O Reasoning in DimSum}
+\date[March 2025]{March, 2025}
+\author[]{
+  {\large Alex Loitzl${}^{1}$}
+  \pdfnewline
+  \pdfnewline
+  \pdfnewline
+  \pdfnewline
+  \pdfnewline
+  \pdfnewline
+  \pdfnewline
+  {\small ${}^{1}$Institute of Science and Technology Austria (ISTA)}
+	%180.773 Seminar for Master Students in L\&C
+}
+
+\begin{document}
+\addtocounter{framenumber}{0}
+
+\begin{frame}
+\titlepage
+\end{frame}
+% Title Slide
+% Basic CompCert slide
+% Example
+% Challgenges
+% Register Files
+% Design slide
+% Tables/Evaluation
+% List of contributions
+
+\section{Background}
+
+\begin{frame}{Modular I/O Reasoning}
+\end{frame}
+
+\begin{frame}{Multi-language Reasoning in DimSum}
+\end{frame}
+
+\section{Project}
+\begin{frame}{Rotation Project}
+\end{frame}
+
+\begin{frame}{Summary}
+  \begin{itemize}
+    \item Formally verified compiler
+          \begin{itemize}
+            \item Proof covers all optimizations
+            \item Correct w.r.t. the modeled semantics
+          \end{itemize}
+    \item Discrepancies between hardware and model
+          \begin{itemize}
+            \item Cannot implement correct calling conventions
+            \item Cannot support TriCore architecture
+          \end{itemize}
+    \item Suboptimal code generation
+          \begin{itemize}
+            \item Inserted moves
+            \item Higher register pressure
+          \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \begin{textblock}{20}[0.5,0.5](10,12)
+    \begin{figure}
+    \centering
+    \input{verification.tex}
+    \end{figure}
+  \end{textblock}
+\end{frame}
+
+\section{RTL to LTL}
+\begin{frame}[t]{RTL to LTL}
+
+\begin{textblock}{18}[0,0](1,4)
+\begin{block}{RTL Transition}
+  \footnotesize
+\[
+  \inference{
+    {\textcolor{black!60}{c(pc) = \lfloor \texttt{op}_{RTL}(op, \vec{x}, y, pc')\rfloor}}
+      &{\texttt{eval\_op}(\_, \_,op, \textcolor{red}{M(\vec{x})}) = \lfloor v \rfloor}}
+    {\_ \vdash S(\_, \_, \_, \textcolor{gray}{pc}, \textcolor{red}{M},\_) \xrightarrow{\epsilon} S(\_, \_, \_, pc', \textcolor{red}{M[y \gets v]}, \_)}
+\]
+\end{block}
+\end{textblock}
+%% We have a similar rule for LTL where the instruction $\texttt{op}_{LTL}$ operates on optional register pairs (\verb!rpair mreg!) and the state contains a map $L$ from locations (Stack slots and registers) to values. We extend the location map in a straightforward fashion by defining three operations: \verb!combine!, \verb!loword!, and \verb!hiword! to perform splitting and combining on the level of values.
+%% %% \begin{align*}
+%% %%   L((r1, r2)) &\stackrel{def}{=} \texttt{combine}(L(r1), L(r2)),\ and\\
+%% %%   L[(r1, r2) \gets v] &\stackrel{def}{=} L[r1 \gets \texttt{hiword}(v)][r2 \gets \texttt{loword}(v)].
+%% %% \end{align*}
+
+%% Below, we show the transition rule for $\texttt{op}_{LTL}$, which is similar to that of RTL, but captures the execution in a basic block, and therefore does not increase the program counter. Note however, that the arguments $\vec{p}$ and result location $p$ are either single registers or pairs and are evaluated as given above.
+\begin{textblock}{18}[0,0](1,10)
+\begin{block}{LTL Transition}
+  \vspace{-.4cm}
+  \footnotesize
+\[
+  \inference{
+    {\texttt{eval\_op}(\_, \_,\texttt{op}, \textcolor{red}{L(\vec{p})}) = \lfloor v \rfloor}}
+    {\_ \vdash B(\_, \_, \_, \textcolor{black!60}{\texttt{op}_{LTL}(op, \vec{p}, q) :: bb},\textcolor{red}{L},\_) \xrightarrow{\epsilon} B(\_, \_, \_, bb, \textcolor{red}{L[q \gets v]}, \_)}
+\]
+\end{block}
+\end{textblock}
+\end{frame}
+
+\section{Evaluation}
+\begin{frame}{Results - Compile Time (Arm hard float)}
+\begin{textblock}{18}[0,0](0.19,2)
+\end{textblock}
+\end{frame}
+
+\definecolor{good}{RGB}{0, 179, 0}
+\definecolor{nice}{RGB}{153, 255, 51}
+\definecolor{bad}{RGB}{255, 153, 0}
+
+\begin{frame}{Results - Code Size}
+\begin{table}[h]
+\centering
+\begin{tabular}{ c|c|c|c |c| c}
+   & vpr & mesa & fuzz1 & fuzz2 & fuzz3\\
+ \hline\hline
+ arm\_hard &\cellcolor{nice} -0.83\% & \cellcolor{nice}-1.77\% & \cellcolor{good}-4.78\% & \cellcolor{good}-4.7\%& \cellcolor{good}-4.7\%\\
+  arm\_soft & -0.2\% & -0.71\% & -0.2\% & \cellcolor{bad}+0.19\%&\cellcolor{bad} +0.27\% \\
+\end{tabular}
+  \label{tab:eval:size}
+\end{table}
+\end{frame}
+
+
+\begin{frame}{Contributions}
+  \begin{itemize}
+    \item Improved model of the Arm assembly semantics
+    \item Proved all architectures correct w.o. changing their semantics
+    \item New and more general register allocator
+    \item Enable future support for TriCore architecture
+    \item Small positive impact on code generation
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Questions?}
+\tableofcontents
+\end{frame}
+
+\begin{frame}[noframenumbering]{Results - Allocator Statistics}
+  \footnotesize
+\begin{table}[H]
+  \centering
+  \setlength{\tabcolsep}{0.495em}
+\begin{tabular}{c
+  |c !{\color{gray!30}\vrule width .5pt}c
+  |c !{\color{gray!30} \vrule width .5pt}c
+  |c !{\color{gray!30} \vrule width .5pt}c
+  |c !{\color{gray!30} \vrule width .5pt}c}
+  \multicolumn{1}{c}{}&  \multicolumn{2}{c}{Remaining} & \multicolumn{2}{c}{Inserted} &\multicolumn{2}{c}{Reloads} &\multicolumn{2}{c}{Spills}\\
+  & C & C${}^{p}$ & C & C${}^{p}$ & C & C${}^{p}$ & C & C${}^{p}$\\
+  \hline\hline
+  vpr & 4557&4557 & \cellcolor{good}165 & \cellcolor{good}0 & 275&275 & 298&297\\
+  mesa & 13414&13420 & \cellcolor{good}939 & \cellcolor{good}0 & \cellcolor{good}1401& \cellcolor{good}1276 & \cellcolor{good}2265& \cellcolor{good}2133\\
+  fuzz1 & 119&118 & \cellcolor{good}40 & \cellcolor{good}0 & 17&17 & \cellcolor{good}17& \cellcolor{good}15\\
+  fuzz2 & 404&404 & \cellcolor{good}148 & \cellcolor{good}0 & 115&115 & \cellcolor{good}74& \cellcolor{good}65\\
+  fuzz3 & 1515&1515 & \cellcolor{good}533 & \cellcolor{good}0 & 456&461 & \cellcolor{good}267& \cellcolor{good}226\\
+\end{tabular}
+\label{fig:eval:alloc_hard}
+\end{table}
+\end{frame}
+
+
+\end{document}

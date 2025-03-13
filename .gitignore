@@ -1,0 +1,13 @@
+*
+!.gitignore
+!Makefile
+!main.pdf
+!*.tex
+
+!code
+!code/*
+!graphics
+!graphics/*
+
+!theme
+!theme/*

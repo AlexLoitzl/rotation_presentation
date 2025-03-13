@@ -1,0 +1,450 @@
+\begin{tikzpicture}
+  \useasboundingbox (-1.6,-3) rectangle (11.1,4);
+
+  \node<1>[] (l) {\Large$\llbracket$\textcolor{red}{$\text{echo}_{\text{rec}}$}};
+  \node (plus) at (1.63,0) {\Large$\bm{\oplus}$};
+  \node<1> (r) at (3.9,0) {\Large$\text{getc}_{\text{spec}} \rrbracket$};
+  \node (sim) at (6.4,0) {\Large$\boldsymbol{\preceq}$};
+  \node<1> (spec) at (8.8, 0) {\Large$\llbracket \text{echo}_{\text{spec}} \rrbracket$};
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \node<2> (l') at (0,0) {
+    \begin{minipage}{2.85cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize]{c} {code/echo.rec}
+    \end{minipage}};
+
+
+  \node<2>[label={[xshift=2.05cm, yshift=-0.7cm]\LARGE \textbf{0}}] (r') at (3.9, 0) {
+    \begin{minipage}{4.1cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/getc.spec}
+    \end{minipage}};
+
+  \node<2>[label={[xshift=2.1cm, yshift=-0.7cm]\LARGE \textbf{0}}] (spec') at (8.8,0){
+    \begin{minipage}{4.2cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/echo.spec}
+    \end{minipage}};
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \node<3> (l') at (0,0) {
+    \begin{minipage}{2.85cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize]{c} {code/echo.rec}
+    \end{minipage}};
+
+  \node<3>[label={[xshift=2.05cm, yshift=-0.7cm]\LARGE \textbf{0}}] (r') at (3.9, 0) {
+    \begin{minipage}{4.1cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/getc.spec}
+    \end{minipage}};
+
+  \node<3>[label={[xshift=2.1cm, yshift=-0.7cm, opacity = .5]\LARGE \textbf{0}}, opacity = .5] (spec') at (8.8,0){
+    \begin{minipage}{4.2cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/echo.spec}
+    \end{minipage}};
+  \node<3>[single arrow, draw=black, very thick, fill=yellow, rotate=-90,
+      minimum width = 5pt, single arrow head extend=2pt,
+      minimum height=7.5mm, label={[above=.3cm]\texttt{(Call f vs h)}}] at (1.63, 2.5){}; % length of arrow
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \node<4>[opacity =.5] (l') at (0,0) {
+    \begin{minipage}{2.85cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize]{c} {code/echo.rec}
+    \end{minipage}};
+
+  \node<4>[label={[xshift=2.05cm, yshift=-0.7cm, opacity=.5]\LARGE \textbf{0}}, opacity=.5] (r') at (3.9, 0) {
+    \begin{minipage}{4.1cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/getc.spec}
+    \end{minipage}};
+
+  \node<4>[label={[xshift=2.1cm, yshift=-0.7cm]\LARGE \textbf{0}}] (spec') at (8.8,0){
+    \begin{minipage}{4.2cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/echo.spec}
+    \end{minipage}};
+
+  \node<4-6>[single arrow, draw=black, very thick, fill=yellow, rotate=-90, opacity=0,
+      minimum width = 5pt, single arrow head extend=2pt,
+      minimum height=7.5mm, label={[opacity=.5, above=.3cm]\texttt{Call f vs h}}] at (1.63, 2.5){}; % length of arrow
+
+  \node<4>[single arrow, draw=black, very thick, fill=yellow, rotate=-90,
+      minimum width = 5pt, single arrow head extend=2pt,
+      minimum height=7.5mm, label={[above=.3cm]\texttt{(Call f vs h)}}] at (8.8, 2.5){}; % length of arrow
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \node<5-6>[opacity =.5] (l') at (0,0) {
+    \begin{minipage}{2.85cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize]{c} {code/echo.rec}
+    \end{minipage}};
+
+  \node<5-6>[label={[xshift=2.05cm, yshift=-0.7cm, opacity=.5]\LARGE \textbf{0}}, opacity=.5] (r') at (3.9, 0) {
+    \begin{minipage}{4.1cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/getc.spec}
+    \end{minipage}};
+
+  \node<5>[label={[xshift=2.1cm, yshift=-0.7cm]\LARGE \textbf{0}}] (spec') at (8.8,0){
+    \begin{minipage}{4.2cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={2}, highlightcolor=yellow!60]{coq} {code/echo.spec}
+    \end{minipage}};
+
+  \node<5-6>[single arrow, draw=black, very thick, fill=yellow, rotate=-90,
+      minimum width = 5pt, single arrow head extend=2pt,
+      minimum height=7.5mm, label={[above=.3cm]\texttt{(Call f vs h)}}] at (8.8, 2.5){}; % length of arrow
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \node<6>[label={[xshift=2.1cm, yshift=-0.7cm]\LARGE \textbf{0}}] (spec') at (8.8,0){
+    \begin{minipage}{4.2cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={3}, highlightcolor=yellow!60]{coq} {code/echo.spec}
+    \end{minipage}};
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \node<7-8>[opacity =.5] (l') at (0,0) {
+    \begin{minipage}{2.85cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize]{c} {code/echo.rec}
+    \end{minipage}};
+
+  \node<7-8>[label={[xshift=2.05cm, yshift=-0.7cm, opacity=.5]\LARGE \textbf{0}}, opacity=.5] (r') at (3.9, 0) {
+    \begin{minipage}{4.1cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/getc.spec}
+    \end{minipage}};
+
+  \node<7>[label={[xshift=2.1cm, yshift=-0.7cm]\LARGE \textbf{0}}] (spec') at (8.8,0){
+    \begin{minipage}{4.2cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={4}, highlightcolor=yellow!60]{coq} {code/echo.spec}
+    \end{minipage}};
+
+  \node<7>[single arrow, draw=black, very thick, fill=yellow, rotate=-90, opacity=0,
+      minimum width = 5pt, single arrow head extend=2pt,
+      minimum height=7.5mm, label={[opacity=.5, above=.3cm]\texttt{(Call "echo" vs h)}}] at (1.63, 2.5){}; % length of arrow
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \node<8>[label={[xshift=2.1cm, yshift=-0.7cm]\LARGE \textbf{0}}] (spec') at (8.8,0){
+    \begin{minipage}{4.2cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={5}, highlightcolor=yellow!60]{coq} {code/echo.spec}
+    \end{minipage}};
+
+  \node<8>[single arrow, draw=black, very thick, fill=yellow, rotate=-90, opacity=0,
+      minimum width = 5pt, single arrow head extend=2pt,
+      minimum height=7.5mm, label={[opacity=.5, above=.3cm]\texttt{(Call "echo" [] h)}}] at (1.63, 2.5){}; % length of arrow
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \node<9>[opacity =1] (l') at (0,0) {
+    \begin{minipage}{2.85cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={1}, highlightcolor=yellow!60]{c} {code/echo.rec}
+    \end{minipage}};
+
+  \node<9-10>[label={[xshift=2.05cm, yshift=-0.7cm, opacity=.5]\LARGE \textbf{0}}, opacity=.5] (r') at (3.9, 0) {
+    \begin{minipage}{4.1cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/getc.spec}
+    \end{minipage}};
+
+  \node<9-10>[label={[xshift=2.1cm, yshift=-0.7cm, opacity=.5]\LARGE \textbf{0}}, opacity=.5] (spec') at (8.8,0){
+    \begin{minipage}{4.2cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={6}, highlightcolor=yellow!60]{coq} {code/echo.spec}
+    \end{minipage}};
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \node<10>[opacity =1] (l') at (0,0) {
+    \begin{minipage}{2.85cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={2}, highlightcolor=yellow!60]{c} {code/echo.rec}
+    \end{minipage}};
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \node<11>[opacity =.5] (l') at (0,0) {
+    \begin{minipage}{2.85cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={2}, highlightcolor=yellow!60]{c} {code/echo.rec}
+    \end{minipage}};
+
+  \node<11>[label={[xshift=2.05cm, yshift=-0.7cm, opacity=.5]\LARGE \textbf{0}}, opacity=.5] (r') at (3.9, 0) {
+    \begin{minipage}{4.1cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/getc.spec}
+    \end{minipage}};
+
+  \node<11-24>[label={[xshift=2.1cm, yshift=-0.7cm, opacity=.5]\LARGE \textbf{0}}, opacity=.5] (spec') at (8.8,0){
+    \begin{minipage}{4.2cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={6}, highlightcolor=yellow!60]{coq} {code/echo.spec}
+    \end{minipage}};
+
+  \node<11>[single arrow, draw=black, very thick, fill=yellow, rotate=90, opacity=1,
+      minimum width = 5pt, single arrow head extend=2pt,
+      minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Call "getc" [] h)}}] at (0, 2.5){}; % length of arrow
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \node<12-21>[opacity =.5] (l') at (0,0) {
+    \begin{minipage}{2.85cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={2}, highlightcolor=yellow!60]{c} {code/echo.rec}
+    \end{minipage}};
+
+  \node<12>[label={[xshift=2.05cm, yshift=-0.7cm, opacity=1]\LARGE \textbf{0}}, opacity=1] (r') at (3.9, 0) {
+    \begin{minipage}{4.1cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/getc.spec}
+    \end{minipage}};
+
+  \node<12-15>[single arrow, draw=black, very thick, fill=yellow, rotate=-90, opacity=1,
+      minimum width = 5pt, single arrow head extend=2pt,
+      minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Call "getc" [] h)}}] at (3.9, 2.5){}; % length of arrow
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \node<13>[label={[xshift=2.05cm, yshift=-0.7cm, opacity=1]\LARGE \textbf{0}}, opacity=1] (r') at (3.9, 0) {
+    \begin{minipage}{4.1cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={2}, highlightcolor=yellow!60]{coq} {code/getc.spec}
+    \end{minipage}};
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \node<14>[label={[xshift=2.05cm, yshift=-0.7cm, opacity=1]\LARGE \textbf{0}}, opacity=1] (r') at (3.9, 0) {
+    \begin{minipage}{4.1cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={3}, highlightcolor=yellow!60]{coq} {code/getc.spec}
+    \end{minipage}};
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \node<15>[label={[xshift=2.05cm, yshift=-0.7cm, opacity=1]\LARGE \textbf{0}}, opacity=1] (r') at (3.9, 0) {
+    \begin{minipage}{4.1cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={4}, highlightcolor=yellow!60]{coq} {code/getc.spec}
+    \end{minipage}};
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \node<16>[label={[xshift=2.05cm, yshift=-0.7cm, opacity=1]\LARGE \textbf{0}}, opacity=1] (r') at (3.9, 0) {
+    \begin{minipage}{4.1cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={5}, highlightcolor=yellow!60]{coq} {code/getc.spec}
+    \end{minipage}};
+
+  \node<16-17>[single arrow, draw=black, very thick, fill=yellow, rotate=-90, opacity=0,
+      minimum width = 5pt, single arrow head extend=2pt,
+      minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Call "getc" [] h)}}] at (3.9, 2.5){}; % length of arrow
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \node<17>[label={[xshift=2.05cm, yshift=-0.7cm, opacity=1]\LARGE \textbf{0}}, opacity=1] (r') at (3.9, 0) {
+    \begin{minipage}{4.1cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={6}, highlightcolor=yellow!60]{coq} {code/getc.spec}
+    \end{minipage}};
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \node<18>[label={[xshift=2.05cm, yshift=-0.7cm, opacity=1]\LARGE \textbf{0}}, opacity=1] (r') at (3.9, 0) {
+    \begin{minipage}{4.1cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={7}, highlightcolor=yellow!60]{coq} {code/getc.spec}
+    \end{minipage}};
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \node<19>[label={[xshift=2.05cm, yshift=-0.7cm, opacity=1]\LARGE \textbf{1}}, opacity=1] (r') at (3.9, 0) {
+    \begin{minipage}{4.1cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={8}, highlightcolor=yellow!60]{coq} {code/getc.spec}
+    \end{minipage}};
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \node<20>[label={[xshift=2.05cm, yshift=-0.7cm, opacity=1]\LARGE \textbf{1}}, opacity=1] (r') at (3.9, 0) {
+    \begin{minipage}{4.1cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={9}, highlightcolor=yellow!60]{coq} {code/getc.spec}
+    \end{minipage}};
+
+  \node<20>[single arrow, draw=black, very thick, fill=yellow, rotate=90, opacity=1,
+      minimum width = 5pt, single arrow head extend=2pt,
+      minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Return 0 h)}}] at (3.9, 2.5){}; % length of arrow
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \node<21->[label={[xshift=2.05cm, yshift=-0.7cm, opacity=.5]\LARGE \textbf{1}}, opacity=.5] (r') at (3.9, 0) {
+    \begin{minipage}{4.1cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={2}, highlightcolor=yellow!60]{coq} {code/getc.spec}
+    \end{minipage}};
+
+  \node<21>[single arrow, draw=black, very thick, fill=yellow, rotate=90, opacity=1,
+      minimum width = 5pt, single arrow head extend=2pt,
+      minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Return 0 h)}}] at (3.9, 2.5){}; % length of arrow
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \node<22>[opacity =1] (l') at (0,0) {
+    \begin{minipage}{2.85cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={2}, highlightcolor=yellow!60]{c} {code/echo.rec}
+    \end{minipage}};
+
+  \node<22>[single arrow, draw=black, very thick, fill=yellow, rotate=-90, opacity=1,
+      minimum width = 5pt, single arrow head extend=2pt,
+      minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Return 0 h)}}] at (0, 2.5){}; % length of arrow
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \node<23>[opacity =1] (l') at (0,0) {
+    \begin{minipage}{2.85cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={3}, highlightcolor=yellow!60]{c} {code/echo.rec}
+    \end{minipage}};
+
+  \node<23>[single arrow, draw=black, very thick, fill=yellow, rotate=90, opacity=1,
+      minimum width = 5pt, single arrow head extend=2pt,
+      minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Call "putc" 0 h)}}] at (0, 2.5){}; % length of arrow
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \node<24>[opacity =.5] (l') at (0,0) {
+    \begin{minipage}{2.85cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={3}, highlightcolor=yellow!60]{c} {code/echo.rec}
+    \end{minipage}};
+
+  \node<24>[single arrow, draw=black, very thick, fill=yellow, rotate=90, opacity=1,
+      minimum width = 5pt, single arrow head extend=2pt,
+      minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Call "putc" 0 h)}}] at (1.63, 2.5){}; % length of arrow
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \node<25-31>[opacity =.5] (l') at (0,0) {
+    \begin{minipage}{2.85cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={3}, highlightcolor=yellow!60]{c} {code/echo.rec}
+    \end{minipage}};
+
+  \node<25>[label={[xshift=2.1cm, yshift=-0.7cm]\LARGE \textbf{0}}] (spec') at (8.8,0){
+    \begin{minipage}{4.2cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={6}, highlightcolor=yellow!60]{coq} {code/echo.spec}
+    \end{minipage}};
+
+  \node<25-29>[single arrow, draw=black, very thick, fill=yellow, rotate=-90, opacity=1,
+      minimum width = 5pt, single arrow head extend=2pt,
+      minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Call "putc" 0 h)}}] at (8.8, 2.5){}; % length of arrow
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \node<26>[label={[xshift=2.1cm, yshift=-0.7cm]\LARGE \textbf{0}}] (spec') at (8.8,0){
+    \begin{minipage}{4.2cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={6}, highlightcolor=yellow!60]{coq} {code/echo.spec}
+    \end{minipage}};
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \node<27>[label={[xshift=2.1cm, yshift=-0.7cm]\LARGE \textbf{1}}] (spec') at (8.8,0){
+    \begin{minipage}{4.2cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={7}, highlightcolor=yellow!60]{coq} {code/echo.spec}
+    \end{minipage}};
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \node<28>[label={[xshift=2.1cm, yshift=-0.7cm]\LARGE \textbf{1}}] (spec') at (8.8,0){
+    \begin{minipage}{4.2cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={7}, highlightcolor=yellow!60]{coq} {code/echo.spec}
+    \end{minipage}};
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \node<29-30>[label={[xshift=2.1cm, yshift=-0.7cm]\LARGE \textbf{1}}] (spec') at (8.8,0){
+    \begin{minipage}{4.2cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={8}, highlightcolor=yellow!60]{coq} {code/echo.spec}
+    \end{minipage}};
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \node<30>[single arrow, draw=black, very thick, fill=yellow, rotate=90, opacity=1,
+      minimum width = 5pt, single arrow head extend=2pt,
+      minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Return v h)}}] at (8.8, 2.5){}; % length of arrow
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \node<31-34>[label={[xshift=2.1cm, yshift=-0.7cm, opacity=.5]\LARGE \textbf{1}}, opacity=.5] (spec') at (8.8,0){
+    \begin{minipage}{4.2cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={8}, highlightcolor=yellow!60]{coq} {code/echo.spec}
+    \end{minipage}};
+
+  \node<31>[single arrow, draw=black, very thick, fill=yellow, rotate=-90, opacity=1,
+      minimum width = 5pt, single arrow head extend=2pt,
+      minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Return v h)}}] at (1.63, 2.5){}; % length of arrow
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \node<32>[opacity =1] (l') at (0,0) {
+    \begin{minipage}{2.85cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={3}, highlightcolor=yellow!60]{c} {code/echo.rec}
+    \end{minipage}};
+
+  \node<32>[single arrow, draw=black, very thick, fill=yellow, rotate=-90, opacity=1,
+      minimum width = 5pt, single arrow head extend=2pt,
+      minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Return v h)}}] at (0, 2.5){}; % length of arrow
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \node<33>[opacity =1] (l') at (0,0) {
+    \begin{minipage}{2.85cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={4}, highlightcolor=yellow!60]{c} {code/echo.rec}
+    \end{minipage}};
+
+  \node<33>[single arrow, draw=black, very thick, fill=yellow, rotate=90, opacity=1,
+      minimum width = 5pt, single arrow head extend=2pt,
+      minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Return 0 h)}}] at (0, 2.5){}; % length of arrow
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \node<34->[opacity =.5] (l') at (0,0) {
+    \begin{minipage}{2.85cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={4}, highlightcolor=yellow!60]{c} {code/echo.rec}
+    \end{minipage}};
+
+  \node<34>[single arrow, draw=black, very thick, fill=yellow, rotate=90, opacity=1,
+      minimum width = 5pt, single arrow head extend=2pt,
+      minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Return 0 h)}}] at (3.9, 2.5){}; % length of arrow
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \node<35>[single arrow, draw=black, very thick, fill=yellow, rotate=-90, opacity=1,
+      minimum width = 5pt, single arrow head extend=2pt,
+      minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Return 0 h)}}] at (8.8, 2.5){}; % length of arrow
+
+  \node<35>[label={[xshift=2.1cm, yshift=-0.7cm, opacity=1]\LARGE \textbf{1}}, opacity=1] (spec') at (8.8,0){
+    \begin{minipage}{4.2cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={9}, highlightcolor=yellow!60]{coq} {code/echo.spec}
+    \end{minipage}};
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \node<36>[label={[xshift=2.1cm, yshift=-0.7cm, opacity=1]\LARGE \textbf{1}}, opacity=1] (spec') at (8.8,0){
+    \begin{minipage}{4.2cm}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={10}, highlightcolor=yellow!60]{coq} {code/echo.spec}
+    \end{minipage}};
+
+  \draw[rounded corners, thick] (-1.6,-2) rectangle (6.15, 3.5);
+  \draw (current bounding box.north east) -- (current bounding box.north west) -- (current bounding box.south west) -- (current bounding box.south east) -- cycle;
+\end{tikzpicture}
