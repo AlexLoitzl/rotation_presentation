@@ -9,5 +9,8 @@
 !graphics
 !graphics/*
 
+!report
+!report/*
+
 !theme
 !theme/*
