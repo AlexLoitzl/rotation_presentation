@@ -164,7 +164,7 @@
   \node<2> (b2) at  (0,-.5) {\{$\lambda$ v, ⌜v = 0⌝\}};
 
   \node<3> (a3) at  (0,.5) {{\LARGE\{}$\lambda$ es, ⌜es = [ ]⌝ $\ast$ {\large\{}$\lambda$ es, ⌜es = [ ]⌝{\large\}}\texttt{getc}{\large\{}$\lambda$ v, \{$\lambda$ es, ⌜es = v⌝\}\texttt{putc}\{\_\} {\large\}}{\LARGE\}}};
-  \node<3> (b3) at  (0,-.5) {{\LARGE\{}$\lambda$ v, ⌜v = 0⌝{\LARGE\}}};
+  \node<3> (b3) at  (0,-.5) {\{$\lambda$ v, ⌜v = 0⌝\}};
 
   \node<4-> (a4) at  (0,.5) {\{$\lambda$ es, ⌜es = [ ]⌝ $\ast$ $\boldsymbol{\exists}$ v, P v $\ast$ (\texttt{getc\_spec} P) $\ast$ (\texttt{putc\_spec} P)\}};
   \node<4-> (b4) at  (0,-.5) {\{$\lambda$ v, ⌜v = 0⌝\}};
@@ -220,6 +220,7 @@
 
 \end{frame}
 
+\section{DimSum Proof}
 \begin{frame}{DimSum}
 \begin{itemize}[<+->]
 \item Decentralized/language-agnostic multi-language semantics
@@ -248,6 +249,7 @@
   \end{textblock}
 \end{frame}
 
+\section{Hoare Style}
 \begin{frame}{Towards Hoare-style Reasoning}
   \begin{textblock}{20}[0,0](0,2)
     \begin{figure}
@@ -293,6 +295,7 @@
 
 \end{frame}
 
+\section{Examples}
 \begin{frame}{(Modular) Hoare-style Reasoning}
 
   \only<1-2>{
@@ -425,5 +428,10 @@
 \item Balance between Hacking and Thinking
 \end{itemize}
 \end{frame}
+
+\begin{frame}{ToC}
+\tableofcontents
+\end{frame}
+
 
 \end{document}
