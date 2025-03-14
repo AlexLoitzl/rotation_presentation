@@ -336,7 +336,10 @@
 \begin{frame}{Example 1}
 
   \begin{textblock}{18}[0,0](1,4)
-  \Large$\llbracket \text{echo}_{\text{rec}} \bm{\oplus} \text{getc}_{\text{spec}} \rrbracket\boldsymbol{\preceq}\llbracket \text{echo}_{\text{spec}} \rrbracket$
+  \only<1>{
+  \Large$\llbracket \text{echo}_{\text{rec}} \bm{\oplus} \text{getc}_{\text{spec}} \rrbracket\boldsymbol{\preceq}\llbracket \text{echo}_{\text{spec}} \rrbracket$}
+  \only<2>{
+  \Large$\llbracket \text{echo}_{\text{rec}} \bm{\oplus} \text{getc}_{\text{spec}} \rrbracket\boldsymbol{\approx>} (\boldsymbol{\lambda} \kappa \sigma, \Pi \kappa \sigma)$}
   \end{textblock}
 
   \begin{textblock}{6.2}[0,0](13,1.8)
@@ -358,15 +361,15 @@
       \centering
       \begin{minipage}{\textwidth}
         \centering
-        \only<1>{
+        \only<1-2>{
         \inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/sim_getc_spec.v}}
-        \only<2>{
-        \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={3-4}, highlightcolor=yellow!60]{coq} {code/sim_getc_spec.v}}
         \only<3>{
-        \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={5-6}, highlightcolor=yellow!60]{coq} {code/sim_getc_spec.v}}
+        \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={3-4}, highlightcolor=yellow!60]{coq} {code/sim_getc_spec.v}}
         \only<4>{
-        \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={8-9}, highlightcolor=yellow!60]{coq} {code/sim_getc_spec.v}}
+        \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={5-6}, highlightcolor=yellow!60]{coq} {code/sim_getc_spec.v}}
         \only<5>{
+        \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={8-9}, highlightcolor=yellow!60]{coq} {code/sim_getc_spec.v}}
+        \only<6>{
         \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={10-11}, highlightcolor=yellow!60]{coq} {code/sim_getc_spec.v}}
       \end{minipage}
     \end{figure}
