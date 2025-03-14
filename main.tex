@@ -154,6 +154,8 @@
 \begin{tikzpicture}
   \useasboundingbox (-5,-2) rectangle (5,4.5);
 
+  \node (info) at (1.75, 4.5) {reads from increasing sequence};
+  \draw (-1.75,4.1) -- (info.west);
   \node<1-> (e1) at (0,0) {\texttt{echo}};
   \node<1> (a1) at  (0,.5) {\{...\}};
   \node<1> (b1) at  (0,-.5) {\{...\}};
@@ -167,12 +169,12 @@
   \node<4-> (a4) at  (0,.5) {\{$\lambda$ es, ⌜es = [ ]⌝ $\ast$ $\boldsymbol{\exists}$ v, P v $\ast$ (\texttt{getc\_spec} P) $\ast$ (\texttt{putc\_spec} P)\}};
   \node<4-> (b4) at  (0,-.5) {\{$\lambda$ v, ⌜v = 0⌝\}};
 
-  \node<5> (a5a) at (0,1.5)
+  \node<5> (a5a) at (0,2.5)
     {\{$\lambda$ es, ⌜es = [ ]⌝ $\ast$ $\boldsymbol{\exists}$ v, P v\}
        \texttt{getc}
      \{$\lambda$ ret, ⌜ret = v⌝ $\ast$ P (v + 1)\}
     };
-  \node<5> (a5b) at (0,2.5)
+  \node<5> (a5b) at (0,1.5)
     {\{$\lambda$ es, $\boldsymbol{\exists}$ v, ⌜es = v⌝ $\ast$ P (v + 1)\}
         \texttt{putc}
      \{$\lambda$ ret, P (v + 1)\}
@@ -227,15 +229,13 @@
 \item No fixed memory model
 \item No fixed notion of linking
 \end{itemize}
-\item Program semantics as LTS, interaction via synchronization
-\begin{itemize}
-\item Reason locally in terms of interaction of two modules
-\end{itemize}
 \item Notion of semantic linking: $\boldsymbol{\oplus}$
 \begin{itemize}
 \item Link semantic components (modules) rather than syntactic
 \item Link programs with specifications (abstract program)
 \end{itemize}
+\item Program semantics as LTS, interaction via synchronization
+\item Reason locally in terms of interaction of two modules
 \end{itemize}
 \end{frame}
 
@@ -336,10 +336,12 @@
 \begin{frame}{Example 1}
 
   \begin{textblock}{18}[0,0](1,4)
-  \centering
-  \Large$\llbracket \textcolor{red}{\text{echo}_{\text{rec}}}\bm{\oplus} \text{getc}_{\text{spec}} \rrbracket\boldsymbol{\preceq}\llbracket \text{echo}_{\text{spec}} \rrbracket$
+  \Large$\llbracket \text{echo}_{\text{rec}} \bm{\oplus} \text{getc}_{\text{spec}} \rrbracket\boldsymbol{\preceq}\llbracket \text{echo}_{\text{spec}} \rrbracket$
   \end{textblock}
 
+  \begin{textblock}{6.2}[0,0](13,1.8)
+  \inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/getc.spec}
+  \end{textblock}
   %% \only<1>{
   %% \begin{textblock}{18}[0,0](1,6)
   %%   \begin{figure}[h]
@@ -351,7 +353,7 @@
   %%   \end{figure}
   %% \end{textblock}}
 
-  \begin{textblock}{18}[0,0](1,6)
+  \begin{textblock}{18}[0,0](1,8.2)
     \begin{figure}[h]
       \centering
       \begin{minipage}{\textwidth}
@@ -377,7 +379,7 @@
   \only<1-4>{
   \begin{textblock}{18}[0,0](1,4)
   \centering
-  \Large$\llbracket \textcolor{red}{\text{echo}_{\text{rec}}}\bm{\oplus} \text{getc}_{\text{spec}} \rrbracket\boldsymbol{\preceq}\llbracket \text{echo}_{\text{spec}} \rrbracket$
+  \Large$\llbracket \text{echo}_{\text{rec}} \bm{\oplus} \text{getc}_{\text{spec}} \rrbracket\boldsymbol{\preceq}\llbracket \text{echo}_{\text{spec}} \rrbracket$
   \end{textblock}}
 
   \only<1-4>{

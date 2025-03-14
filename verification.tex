@@ -1,7 +1,7 @@
 \begin{tikzpicture}
   \useasboundingbox (-1.6,-3) rectangle (11.1,4);
 
-  \node<1>[] (l) {\Large$\llbracket$\textcolor{red}{$\text{echo}_{\text{rec}}$}};
+  \node<1>[] (l) {\Large$\llbracket \text{echo}_{\text{rec}}$};
   \node (plus) at (1.63,0) {\Large$\bm{\oplus}$};
   \node<1> (r) at (3.9,0) {\Large$\text{getc}_{\text{spec}} \rrbracket$};
   \node (sim) at (6.4,0) {\Large$\boldsymbol{\preceq}$};
@@ -175,7 +175,7 @@
 
   \node<11>[single arrow, draw=black, very thick, fill=yellow, rotate=90, opacity=1,
       minimum width = 5pt, single arrow head extend=2pt,
-      minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Call "getc" [] h)}}] at (0, 2.5){}; % length of arrow
+      minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Call "getc" [] h)}}] at (0.3, 2.5){}; % length of arrow
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -299,7 +299,7 @@
 
   \node<23>[single arrow, draw=black, very thick, fill=yellow, rotate=90, opacity=1,
       minimum width = 5pt, single arrow head extend=2pt,
-      minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Call "putc" 0 h)}}] at (0, 2.5){}; % length of arrow
+      minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Call "putc" 0 h)}}] at (0.3, 2.5){}; % length of arrow
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -328,7 +328,7 @@
       \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={6}, highlightcolor=yellow!60]{coq} {code/echo.spec}
     \end{minipage}};
 
-  \node<25-29>[single arrow, draw=black, very thick, fill=yellow, rotate=-90, opacity=1,
+  \node<25-29>[single arrow, draw=black, very thick, fill=yellow, rotate=90, opacity=1,
       minimum width = 5pt, single arrow head extend=2pt,
       minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Call "putc" 0 h)}}] at (8.8, 2.5){}; % length of arrow
 
@@ -370,7 +370,7 @@
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  \node<30>[single arrow, draw=black, very thick, fill=yellow, rotate=90, opacity=1,
+  \node<30>[single arrow, draw=black, very thick, fill=yellow, rotate=-90, opacity=1,
       minimum width = 5pt, single arrow head extend=2pt,
       minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Return v h)}}] at (8.8, 2.5){}; % length of arrow
 
@@ -380,7 +380,7 @@
 
   \node<31-34>[label={[xshift=2.1cm, yshift=-0.7cm, opacity=.5]\LARGE \textbf{1}}, opacity=.5] (spec') at (8.8,0){
     \begin{minipage}{4.2cm}
-      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={8}, highlightcolor=yellow!60]{coq} {code/echo.spec}
+      \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={9}, highlightcolor=yellow!60]{coq} {code/echo.spec}
     \end{minipage}};
 
   \node<31>[single arrow, draw=black, very thick, fill=yellow, rotate=-90, opacity=1,
@@ -427,7 +427,7 @@
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  \node<35>[single arrow, draw=black, very thick, fill=yellow, rotate=-90, opacity=1,
+  \node<35>[single arrow, draw=black, very thick, fill=yellow, rotate=90, opacity=1,
       minimum width = 5pt, single arrow head extend=2pt,
       minimum height=7.5mm, label={[opacity=1, above=.3cm]\texttt{(Return 0 h)}}] at (8.8, 2.5){}; % length of arrow
 
