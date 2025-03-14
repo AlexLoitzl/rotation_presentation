@@ -150,56 +150,93 @@
       \inputminted[bgcolor=codebg, fontsize=\small]{c} {code/echo.rec}
 \end{textblock}
 
+\centering
+\begin{tikzpicture}
+  \useasboundingbox (-5,-2) rectangle (5,4.5);
 
-\only<1>{
-\begin{textblock}{20}[0,0](0,10)
-  \centering
-  \{...\} \texttt{echo} \{...\}
-\end{textblock}}
+  \node<1-> (e1) at (0,0) {\texttt{echo}};
+  \node<1> (a1) at  (0,.5) {\{...\}};
+  \node<1> (b1) at  (0,-.5) {\{...\}};
 
-\only<2>{
-\begin{textblock}{20}[0,0](0,10)
-  \centering
-  \{$\lambda$ es, ⌜es = [ ]⌝\} \texttt{echo} \{$\lambda$ v, ⌜v = 0⌝\}
-\end{textblock}}
+  \node<2> (a2) at  (0,.5) {\{$\lambda$ es, ⌜es = [ ]⌝\} };
+  \node<2> (b2) at  (0,-.5) {\{$\lambda$ v, ⌜v = 0⌝\}};
 
-\only<3>{
-\begin{textblock}{20}[0,0](0,10)
-  \centering
-  {\LARGE\{}$\lambda$ es, ⌜es = [ ]⌝ $\ast$ {\large\{}$\lambda$ es, ⌜es = [ ]⌝{\large\}}\texttt{getc}{\large\{}$\lambda$ v, \{$\lambda$ es, ⌜es = v⌝\}\texttt{putc}\{\_\} {\large\}}{\LARGE\}}\\
-    \texttt{echo}\\
-  {\LARGE\{}$\lambda$ v, ⌜v = 0⌝{\LARGE\}}
-\end{textblock}}
+  \node<3> (a3) at  (0,.5) {{\LARGE\{}$\lambda$ es, ⌜es = [ ]⌝ $\ast$ {\large\{}$\lambda$ es, ⌜es = [ ]⌝{\large\}}\texttt{getc}{\large\{}$\lambda$ v, \{$\lambda$ es, ⌜es = v⌝\}\texttt{putc}\{\_\} {\large\}}{\LARGE\}}};
+  \node<3> (b3) at  (0,-.5) {{\LARGE\{}$\lambda$ v, ⌜v = 0⌝{\LARGE\}}};
 
-\only<5->{
-\begin{textblock}{20}[0,0](0,8)
-  \centering
-  \{$\lambda$ es, ⌜es = [ ]⌝ $\ast$ $\boldsymbol{\exists}$ v, P v\}
-    \texttt{getc}
-  \{$\lambda$ ret, ⌜ret = v⌝ $\ast$ P (v + 1)\}
-\end{textblock}}
+  \node<4-> (a4) at  (0,.5) {\{$\lambda$ es, ⌜es = [ ]⌝ $\ast$ $\boldsymbol{\exists}$ v, P v $\ast$ (\texttt{getc\_spec} P) $\ast$ (\texttt{putc\_spec} P)\}};
+  \node<4-> (b4) at  (0,-.5) {\{$\lambda$ v, ⌜v = 0⌝\}};
 
-\only<5>{
-\begin{textblock}{20}[0,0](0,10)
-  \centering
-  \{$\lambda$ es, $\boldsymbol{\exists}$ v, ⌜es = v⌝ $\ast$ P (v + 1)\}
-    \texttt{putc}
-  \{$\lambda$ ret, P (v + 1)\}
-\end{textblock}}
+  \node<5> (a5a) at (0,1.5)
+    {\{$\lambda$ es, ⌜es = [ ]⌝ $\ast$ $\boldsymbol{\exists}$ v, P v\}
+       \texttt{getc}
+     \{$\lambda$ ret, ⌜ret = v⌝ $\ast$ P (v + 1)\}
+    };
+  \node<5> (a5b) at (0,2.5)
+    {\{$\lambda$ es, $\boldsymbol{\exists}$ v, ⌜es = v⌝ $\ast$ P (v + 1)\}
+        \texttt{putc}
+     \{$\lambda$ ret, P (v + 1)\}
+    };
 
-\only<4->{
-\begin{textblock}{20}[0,0](0,12)
-  \centering
-  \{$\lambda$ es, ⌜es = [ ]⌝ $\ast$ $\boldsymbol{\exists}$ v, P v $\ast$ (\texttt{getc\_spec} P) $\ast$ (\texttt{putc\_spec} P)\}\\
-    \texttt{echo}\\
-  \{$\lambda$ v, ⌜v = 0⌝\}
-\end{textblock}}
+%% \draw (current bounding box.north east) -- (current bounding box.north west) -- (current bounding box.south west) -- (current bounding box.south east) -- cycle;
+\end{tikzpicture}
+%% \only<1>{
+%% \begin{textblock}{20}[0,0](0,10)
+%%   \centering
+%%   \{...\} \texttt{echo} \{...\}
+%% \end{textblock}}
 
+%% \only<2>{
+%% \begin{textblock}{20}[0,0](0,10)
+%%   \centering
+%%   \{$\lambda$ es, ⌜es = [ ]⌝\} \texttt{echo} \{$\lambda$ v, ⌜v = 0⌝\}
+%% \end{textblock}}
 
+%% \only<3>{
+%% \begin{textblock}{20}[0,0](0,10)
+%%   \centering
+%%   {\LARGE\{}$\lambda$ es, ⌜es = [ ]⌝ $\ast$ {\large\{}$\lambda$ es, ⌜es = [ ]⌝{\large\}}\texttt{getc}{\large\{}$\lambda$ v, \{$\lambda$ es, ⌜es = v⌝\}\texttt{putc}\{\_\} {\large\}}{\LARGE\}}\\
+%%     \texttt{echo}\\
+%%   {\LARGE\{}$\lambda$ v, ⌜v = 0⌝{\LARGE\}}
+%% \end{textblock}}
+
+%% \only<5->{
+%% \begin{textblock}{20}[0,0](0,8)
+%%   \centering
+%%   \{$\lambda$ es, ⌜es = [ ]⌝ $\ast$ $\boldsymbol{\exists}$ v, P v\}
+%%     \texttt{getc}
+%%   \{$\lambda$ ret, ⌜ret = v⌝ $\ast$ P (v + 1)\}
+%% \end{textblock}}
+
+%% \only<5>{
+%% \begin{textblock}{20}[0,0](0,10)
+%%   \centering
+%%   \{$\lambda$ es, $\boldsymbol{\exists}$ v, ⌜es = v⌝ $\ast$ P (v + 1)\}
+%%     \texttt{putc}
+%%   \{$\lambda$ ret, P (v + 1)\}
+%% \end{textblock}}
 
 \end{frame}
 
-\begin{frame}{Multi-language Reasoning in DimSum}
+\begin{frame}{DimSum}
+\begin{itemize}[<+->]
+\item Decentralized/language-agnostic multi-language semantics
+\begin{itemize}
+\item No fixed source
+\item No fixed set of languages
+\item No fixed memory model
+\item No fixed notion of linking
+\end{itemize}
+\item Program semantics as LTS, interaction via synchronization
+\begin{itemize}
+\item Reason locally in terms of interaction of two modules
+\end{itemize}
+\item Notion of semantic linking: $\boldsymbol{\oplus}$
+\begin{itemize}
+\item Link semantic components (modules) rather than syntactic
+\item Link programs with specifications (abstract program)
+\end{itemize}
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Proofs in DimSum}
@@ -218,6 +255,42 @@
     \input{verification2.tex}
     \end{figure}
   \end{textblock}
+\end{frame}
+
+\begin{frame}{Rotation Project}
+\begin{textblock}{20}[0,0](1,4)
+  \begin{itemize}
+    \item<1-> Get familiar with DimSum (and Iris)
+    \item<2-> Experiment with new reasoning style
+    \item<3-> Proof refinements for multiple example programs
+  \end{itemize}
+\end{textblock}
+
+\only<3>{
+\begin{textblock}{4.4}[0,0](1,7.8)
+\inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/echo.rec}
+\end{textblock}}
+
+\only<3>{
+\begin{textblock}{4.4}[0,0](12,13)
+\inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/echo1}
+\end{textblock}}
+
+\only<3>{
+\begin{textblock}{4.4}[0,0](15,9)
+\inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/echo2.v}
+\end{textblock}}
+
+\only<3>{
+\begin{textblock}{6.9}[0,0](3,11.3)
+\inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/read.rec}
+\end{textblock}}
+
+\only<3>{
+\begin{textblock}{4.5}[0,0](9,8.3)
+\inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/getc.rec}
+\end{textblock}}
+
 \end{frame}
 
 \begin{frame}{(Modular) Hoare-style Reasoning}
@@ -301,24 +374,31 @@
 
 \begin{frame}{Example 2}
 
-  \only<1>{
+  \only<1-4>{
   \begin{textblock}{18}[0,0](1,4)
   \centering
   \Large$\llbracket \textcolor{red}{\text{echo}_{\text{rec}}}\bm{\oplus} \text{getc}_{\text{spec}} \rrbracket\boldsymbol{\preceq}\llbracket \text{echo}_{\text{spec}} \rrbracket$
   \end{textblock}}
 
-  \only<1>{
-  \begin{textblock}{18}[0,0](1,6)
+  \only<1-4>{
+  \begin{textblock}{16}[0,0](2,6)
     \begin{figure}[h]
       \centering
       \begin{minipage}{\textwidth}
         \centering
-        \inputminted[bgcolor=codebg, fontsize=\scriptsize]{coq} {code/sim_getc.v}
+        \only<1>{
+        \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={2}, highlightcolor=yellow!60]{coq} {code/sim_getc.v}}
+        \only<2>{
+        \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={3-5}, highlightcolor=yellow!60]{coq} {code/sim_getc.v}}
+        \only<3>{
+        \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={6-8}, highlightcolor=yellow!60]{coq} {code/sim_getc.v}}
+        \only<4>{
+        \inputminted[bgcolor=codebg, fontsize=\scriptsize, highlightlines={9-11}, highlightcolor=yellow!60]{coq} {code/sim_getc.v}}
       \end{minipage}
     \end{figure}
   \end{textblock}}
 
-  \only<2>{
+  \only<5>{
   \begin{textblock}{18}[0,0](1,3)
     \begin{figure}[h]
       \centering

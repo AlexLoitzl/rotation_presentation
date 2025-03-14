@@ -1,0 +1,10 @@
+global pos = 0;
+read (l, c) :=
+  if (c <= 0) {
+    return 0;
+  } else {
+    l <- *pos;
+    pos <- *pos + 1;
+    ret = read(l + 1, c -1);
+    return ret + 1;
+  }

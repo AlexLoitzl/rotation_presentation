@@ -1,0 +1,3 @@
+int getc (l) :=
+  let _ := read(l);
+  return *l;

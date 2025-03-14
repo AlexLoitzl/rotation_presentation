@@ -1,0 +1,6 @@
+int echo () :=
+  let c := getc();
+  putc(c);
+  let c := getc();
+  putc(c);
+  return 0;
