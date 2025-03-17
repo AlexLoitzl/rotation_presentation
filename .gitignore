@@ -11,6 +11,9 @@
 !report/*.tex
 !report/llncs.cls
 !report/splncs04.bst
+!report/*.v
+!report/*.spec
+!report/*.rec
 
 !theme
 !theme/*

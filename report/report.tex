@@ -22,9 +22,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%% MY PACKAGES %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[frozencache]{minted}
-\setminted{fontsize=\footnotesize, escapeinside=!!}
-\usemintedstyle{xcode}
 \usepackage{xspace}
 \usepackage{subcaption}
 %\usepackage[gray]{xcolor}
@@ -33,6 +30,7 @@
 \usetikzlibrary{calc, arrows.meta, math, positioning, decorations.pathreplacing, patterns, shapes}
 \usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor = blue]{hyperref}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{semantic}
 \usepackage{mathtools}
 \usepackage{todonotes}
@@ -40,11 +38,32 @@
 \usepackage{bbding}
 \usepackage{orcidlink}
 \usepackage[capitalize]{cleveref}
+\usepackage{xpatch}
+\usepackage{eulervm}
 
 \usepackage{pgfplots}
 \usepackage{pgfplotstable}
 \pgfplotsset{compat=1.16}
 \usepgfplotslibrary{groupplots}
+
+\definecolor{codebg}{HTML}{eeeeee}
+\usepackage{minted}
+\setminted{fontsize=\small, bgcolor=codebg}
+\usemintedstyle{tango}
+
+\usepackage{newunicodechar}
+\newunicodechar{Π}{\ensuremath{\Pi}}
+\newunicodechar{Φ}{\ensuremath{\Phi}}
+\newunicodechar{∗}{\ensuremath{\ast}}
+\newunicodechar{⌜}{\ensuremath{\ulcorner}}
+\newunicodechar{⌝}{\ensuremath{\urcorner}}
+\newunicodechar{∃}{\ensuremath{\boldsymbol\exists}}
+\newunicodechar{κ}{\ensuremath{\kappa}}
+\newunicodechar{σ}{\ensuremath{\sigma}}
+\newunicodechar{↪}{\ensuremath{\hookrightarrow}}
+\newunicodechar{≡}{\ensuremath{\equiv}}
+\newunicodechar{□}{\ensuremath{\square}}
+
 
 % If you use the hyperref package, please uncomment the following two lines
 % to display URLs in blue roman font according to Springer's eBook style:
@@ -82,25 +101,97 @@
 \end{abstract}
 
 \section{Background}
+We briefly summarize the motivation, inspiration and state-of-the art before detailing project details.
 \subsection{Modular I/O Reasoning}
+The motivation for the project comes from works for the verifast prover\cite{} where I/O reasoning is built into Hoare-style reasoning, rather than handling this outside.
 \subsection{DimSum}
+DimSum is a framework for multi-language reasoning realized in the Rocq theorem prover. Program semantics are defined as LTS (modules) which can interact with each other by synchronizing on events like Process algebra.
+This way DimSum allows arbitrary interaction between modules as long as they agree on the kind of events. Primitve combinators of modules are used to build complex modules which translate the events such that modules can be linked semantically, or wrapper modules which translate the events from one language to another.
+
+The recent works of introducing Hoare-style reasoning to DimSum are in a sense orthogonal in the sense that we want to abstract as much as possible of this away in order to focus on reasoning about functional correctness of a single module. To combine module-local reasoning and the power of DimSum, the notion of a switch is introduced in order to change from one module to the other. At the moment it requires to know...
+
 \section{Rotation Project}
 
-\subsection{Main Challenge}
-The main objective of the rotation (as stated in the pre-rotation protocol) was to get familiar with DimSum and the tools used in its design. Mainly the SSreflect tactic language and Separation logic and the Iris Proof Mode.
+The main objective of the rotation (as stated in the pre-rotation protocol) was to get familiar with DimSum and the tools used in its design. Mainly the SSreflect tactic language and Separation logic and the Iris Proof Mode. The means to achieve this goal was through a succession of various small verification tasks, first in the original proof style and later with the newly, partially developped modular hoare reasoning style.
 
-The means to achieve this goal was through a succession of various small verification tasks, first in the original proof style and later with the newly, partially developped modular hoare reasoning style.
+The small examples served as stepping stones to get a more fundamental understanding of the framework and included simple functions and specifications.
+
+\subsection{Main Challenge}
+
+The main challenge chrystalized rather quickly and is the correctness proof of the following program in DimSum's Rec Language.
 
 The main problem worked on during the rotation was the proof for the following program. The module on the left, is the linked module of the echo program with a getc spec.
 The programm captures the main challenges of the project well, since through the recursion, one can not use any shortcuts. All components must be used in such a way that the ownership of resources has not changed.
 
+\begin{figure}[h]
+  \centering
+  \hspace{.3em}
+  \begin{subfigure}[b]{0.21\textwidth}
+    \centering
+    \begin{minipage}{\textwidth}
+      \centering
+      \inputminted[bgcolor=codebg]{c} {echo.rec}
+    \end{minipage}
+  \end{subfigure}
+  %% \hspace{3em}
+  \hfill
+  \begin{subfigure}[b]{0.35\textwidth}
+    \centering
+    \begin{minipage}{\textwidth}
+      \centering
+      \inputminted[bgcolor=codebg]{coq} {getc.spec}
+    \end{minipage}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.4\textwidth}
+    \centering
+    \begin{minipage}{\textwidth}
+      \centering
+      \inputminted[bgcolor=codebg]{coq} {echo_getc.spec}
+    \end{minipage}
+  \end{subfigure}
+
+  \caption{code of CompCert (left) and (right)}
+  %\label{fig:design:example3}
+\end{figure}
+
+
 \subsection{Switching Notation}
 % TODO: parts of this should probably
 One other interesting aspect of the rotation is how to communicate the intuition correctly. The main focus of DimSum, being a framework for multi-language reasoning, was modeling the interaction of different components and giving good stuff for that.
-The recent works of introducing Hoare-style reasoning to DimSum are in a sense orthogonal in the sense that we want to abstract as much as possible of this away in order to focus on reasoning about functional correctness of a single module.
-
-To combine module-local reasoning and the power of DimSum, the notion of a switch is introduced in order to change from one module to the other. At the moment it requires to know...
 The outcome of the ongoing discussions is a notation proposed by Michael Sammler, which was so far only used in order present the final results to the group, but has not been tested within the Rocq theorem prover.
+
+\begin{figure}[h]
+  \centering
+  \hspace{.3em}
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \begin{minipage}{\textwidth}
+      \centering
+      \inputminted[bgcolor=codebg]{coq} {getc_prepost_short.v}
+    \end{minipage}
+  \end{subfigure}
+  %% \hspace{3em}
+  \hfill
+  \begin{subfigure}[b]{0.42\textwidth}
+    \centering
+    \begin{minipage}{\textwidth}
+      \centering
+      \inputminted[bgcolor=codebg]{coq} {echo_prepost.v}
+    \end{minipage}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.75\textwidth}
+    \centering
+    \begin{minipage}{\textwidth}
+      \centering
+      \inputminted[bgcolor=codebg]{coq} {sim_getc.v}
+    \end{minipage}
+  \end{subfigure}
+  %
+  \caption{code of CompCert (left) and (right)}
+  %\label{fig:design:example3}
+\end{figure}
+
 
 
 \section{Discussion}
