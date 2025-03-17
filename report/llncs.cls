@@ -388,7 +388,6 @@ You should not use \verb|\subparagraph| with this class.\vskip0.5cm}
 \DeclareMathSymbol{\Psi}{\mathalpha}{letters}{"09}
 \DeclareMathSymbol{\Omega}{\mathalpha}{letters}{"0A}
 
-\let\footnotesize\small
 
 \if@custvec
 \DeclareRobustCommand\vec[1]{\mathchoice{\mbox{\boldmath$\displaystyle#1$}}

@@ -1,5 +1,5 @@
 all:
 	pdflatex -shell-escape report.tex
-	#bibtex report
-	#pdflatex report
-	#pdflatex report
+	bibtex report
+	pdflatex -shell-escape report.tex
+	pdflatex -shell-escape report.tex

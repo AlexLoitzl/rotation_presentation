@@ -4,8 +4,8 @@
 \usepackage{geometry}
 \geometry{
   a4paper,         % or letterpaper
-  textwidth=15cm,  % llncs has 12.2cm
-  textheight=24cm, % llncs has 19.3cm
+  textwidth=14cm,  % llncs has 12.2cm
+  textheight=22cm, % llncs has 19.3cm
   heightrounded,   % integer number of lines
   hratio=1:1,      % horizontally centered
   vratio=2:3,      % not vertically centered
@@ -48,7 +48,7 @@
 
 \definecolor{codebg}{HTML}{eeeeee}
 \usepackage{minted}
-\setminted{fontsize=\small, bgcolor=codebg}
+\setminted{fontsize=\footnotesize, bgcolor=codebg}
 \usemintedstyle{tango}
 
 \usepackage{newunicodechar}
@@ -97,13 +97,26 @@
 % Abstract: an introduction conveying the general scientific background, research methodology and overall investigation status of the overarching scientific question in the pertinent scientific field
 
 \begin{abstract}
-  This report saves as an artifact capturing the outcome and insights of the authors rotation in Michael Sammler's PLV group at ISTA. We give a brief background and motivation of the project and conclude with a discussion of learning outcomes and insights and open problems.
+  Hoare logic provides a framework for modularly reasoning about program behavior and in the more powerful setting of separation logic can be used to verify various low-level aspects of interest like memory-safety and exclude data-races. On the other hand, reasoning about the input/output behavior of a program has not been studied much.
+  This is the main motivation for ongoing work built on top of DimSum enabling modular proofs.
+  We report on the rotation project which aim was to first gain some insights into DimSum and the tools used in it's proofs and then to turn to experimenting with I/O reasoning.
+  We added some new lemmas and gained valuable insights into the fixing of the environment for each module.
 \end{abstract}
 
 \section{Background}
-We briefly summarize the motivation, inspiration and state-of-the art before detailing project details.
+Below, we briefly present relevant aspects of DimSum\cite{dimsum} and the initial motivation for the project.
 \subsection{Modular I/O Reasoning}
-The motivation for the project comes from works for the verifast prover\cite{} where I/O reasoning is built into Hoare-style reasoning, rather than handling this outside.
+
+In \cite{io1,io2},  a modular approach based on separation logic for capturing the interactive (I/O) behavior programs is proposed. We build on their approach, but use general abstract nested hoare triples allowing arbitrary nesting, rather than their Petri-net based approach. This allows for specification of functions, in which we can enforce order of calls and most importantly, refer to the output values of functions in deeper nested triples, avoiding to existentially quantify over the value.
+
+%% \[\left\{\right\} \texttt{getc} \left\{\right\}\]
+\begin{gather*}
+  \Bigl\{\lambda \text{ es POST}{}_e\text{, ⌜es = [ ]⌝} \ast \bigl\{\lambda \text{ es POST}_1\text{, ⌜es = [ ]⌝} \bigr\} \texttt{getc} \bigl\{\lambda \text{ v, } \left\{\lambda \text{ es, ⌜es = v⌝}\right\}\texttt{putc}\left\{\_\right\} \bigr\}\Bigr\}\\
+  \texttt{echo}\\
+  \Bigl\{\lambda \text{v, ⌜v = 0⌝}\Bigr\}
+\end{gather*}
+
+The motivation for the project comes from works for the VeriFast prover\cite{io1,io2} where I/O reasoning is built into Hoare-style reasoning, rather than handling this outside.
 \subsection{DimSum}
 DimSum is a framework for multi-language reasoning realized in the Rocq theorem prover. Program semantics are defined as LTS (modules) which can interact with each other by synchronizing on events like Process algebra.
 This way DimSum allows arbitrary interaction between modules as long as they agree on the kind of events. Primitve combinators of modules are used to build complex modules which translate the events such that modules can be linked semantically, or wrapper modules which translate the events from one language to another.
@@ -214,6 +227,7 @@ How to communicate...
 
 Multilanguage...
 
+\bibliographystyle{splncs04.bst}
 \bibliography{references}
 
 \end{document}
