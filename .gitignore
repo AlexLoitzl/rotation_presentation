@@ -6,11 +6,11 @@
 
 !code
 !code/*
-!graphics
-!graphics/*
 
 !report
-!report/*
+!report/*.tex
+!report/llncs.cls
+!report/splncs04.bst
 
 !theme
 !theme/*
