@@ -77,13 +77,51 @@
 %
 % Abstract: an introduction conveying the general scientific background, research methodology and overall investigation status of the overarching scientific question in the pertinent scientific field
 
-%% \begin{abstract}
-%% \end{abstract}
+\begin{abstract}
+  This report saves as an artifact capturing the outcome and insights of the authors rotation in Michael Sammler's PLV group at ISTA. We give a brief background and motivation of the project and conclude with a discussion of learning outcomes and insights and open problems.
+\end{abstract}
 
 \section{Background}
+\subsection{Modular I/O Reasoning}
+\subsection{DimSum}
 \section{Rotation Project}
 
+\subsection{Main Challenge}
+The main objective of the rotation (as stated in the pre-rotation protocol) was to get familiar with DimSum and the tools used in its design. Mainly the SSreflect tactic language and Separation logic and the Iris Proof Mode.
+
+The means to achieve this goal was through a succession of various small verification tasks, first in the original proof style and later with the newly, partially developped modular hoare reasoning style.
+
+The main problem worked on during the rotation was the proof for the following program. The module on the left, is the linked module of the echo program with a getc spec.
+The programm captures the main challenges of the project well, since through the recursion, one can not use any shortcuts. All components must be used in such a way that the ownership of resources has not changed.
+
+\subsection{Switching Notation}
+% TODO: parts of this should probably
+One other interesting aspect of the rotation is how to communicate the intuition correctly. The main focus of DimSum, being a framework for multi-language reasoning, was modeling the interaction of different components and giving good stuff for that.
+The recent works of introducing Hoare-style reasoning to DimSum are in a sense orthogonal in the sense that we want to abstract as much as possible of this away in order to focus on reasoning about functional correctness of a single module.
+
+To combine module-local reasoning and the power of DimSum, the notion of a switch is introduced in order to change from one module to the other. At the moment it requires to know...
+The outcome of the ongoing discussions is a notation proposed by Michael Sammler, which was so far only used in order present the final results to the group, but has not been tested within the Rocq theorem prover.
+
+
 \section{Discussion}
+
+Below we discuss the outcome and future directions. We also talk about challenges since it is closely related to future work. The tool should be usuable and one of the goal is to find the right level to talk about.
+
+\subsection{Outcome}
+
+A simple lemma which allows straight forward reasoning about the \textcolor{red}{compound} operation `TCallRet'.
+We have sucessfully used in in multiple proofs with a straightforward corollary of TWaitingRaw
+
+Fix $\Pi$ upfront, and additional definitions and lemmas about the linking module were added.
+
+\subsection{Challenges \& Future Work}
+
+A top down approach was chosen...
+It is hard to do say what is the correct way to do it. It could have been nice to develop an intuition for switches this way, but didn't happen.
+
+How to communicate...
+
+Multilanguage...
 
 \bibliography{references}
 
