@@ -133,20 +133,19 @@ The recently added suppport for Hoare-style reasoning is othogonal to the previo
 
 \section{Rotation Project}
 
-The main objective of the rotation (as stated in the pre-rotation protocol) was to get familiar with DimSum and the tools used in its design. Mainly the SSreflect tactic language and Separation logic and the Iris Proof Mode. The means to achieve this goal was through a succession of various small verification tasks, first in the original proof style and later with the newly, partially developped modular hoare reasoning style.
+The main objective of the rotation (as stated in the pre-rotation protocol) was to get familiar with DimSum and the tools used in its design. This includes the SSreflect tactic language, the Iris Proof Mode (and Separation logic), and carrying out proofs in both the original and the new modular proof styles.
 
-The small examples served as stepping stones to get a more fundamental understanding of the framework and included simple functions and specifications.
+Small example programs, moslty with I/O behavior, but also some memory management and recursion, served as an incremental way to get introduced to the new topics. Rather quickly, the main challenge came up: Writing a fully modular specification for a recursive program with I/O.
 
-\subsection{Main Challenge}
+\subsection{Writing correct modular specifications}
 
-The main challenge chrystalized rather quickly and is the correctness proof of the following program in DimSum's Rec Language.
+One of the example problems stated is to prove a linked module consisting of a Rec program \texttt{echo} and a Spec program \texttt{getc} refines a Spec program \texttt{echo\_getc} as stated below, where we write $\oplus$ for \emph{semantic linking} of two modules.
+\[(\texttt{echo} \oplus \texttt{getc}) \preceq \texttt{echo\_getc}\]
 
-The main problem worked on during the rotation was the proof for the following program. The module on the left, is the linked module of the echo program with a getc spec.
-The programm captures the main challenges of the project well, since through the recursion, one can not use any shortcuts. All components must be used in such a way that the ownership of resources has not changed.
+The programs are defined in \cref{fig:def}, where most notably, \texttt{echo} recursively calls \texttt{getc} and uses the output as argument for \texttt{putc}. The proof of the refinement has two patterns of interaction between the modules. One is the call of \texttt{getc} to the linked module, the other, an external call to \texttt{putc}, which is a emited as visible events for both the program and the specification.
 
 \begin{figure}[h]
   \centering
-  \hspace{.3em}
   \begin{subfigure}[b]{0.21\textwidth}
     \centering
     \begin{minipage}{\textwidth}
@@ -172,35 +171,33 @@ The programm captures the main challenges of the project well, since through the
     \end{minipage}
   \end{subfigure}
 
-  \caption{code of CompCert (left) and (right)}
-  %\label{fig:design:example3}
+  \caption{Rec progam \texttt{echo} (left), Spec program \texttt{getc} (middle), and Spec program \texttt{echo\_getc} (right) specifying the module linking \texttt{echo} and \texttt{getc}.}
+  \label{fig:def}
 \end{figure}
 
+The proof itself is quite straightforward in the original proof style of DimSum, as it consists mainly of interaction between modules. The next step, a monolothic Hoare-style proof, is more cumbersome, but is also quite straightforward. The main challenge lies in the correct creation and use of the ghost variables capturing the state of the modules.
 
-\subsection{Switching Notation}
-% TODO: parts of this should probably
-One other interesting aspect of the rotation is how to communicate the intuition correctly. The main focus of DimSum, being a framework for multi-language reasoning, was modeling the interaction of different components and giving good stuff for that.
-The outcome of the ongoing discussions is a notation proposed by Michael Sammler, which was so far only used in order present the final results to the group, but has not been tested within the Rocq theorem prover.
+The main challenge is writing a fully modular specification, i.e., writing specifications for the different calls. The main problem, which is ensured to exist, is the correct abstraction of the ownership of resources, which allow you to call things. The recursive nature of the program requires one to correctly return all resources in order to be able to use the inductive hypothesis.
+
+\cref{fig:specs} contains a concrete specification, which specifies the behavior of calls to getc from the Rec module. The conclusion states that there is some abstract predicate P, that we know holds for 0 (the starting point of the increasing sequence getc reads from), and then get a persistent statement that if we own this predicate for some value v, then a call of \texttt{getc} returns this value and gives back ownership of P (v + 1). In the premise, we require some other abstract predicate (which will be instantiated with the state of the linking module) and additionally a hypothesis which constrains $\Pi_r$ and $\Pi_l$. This allows us to switch out of the Rec module, into the spec module and back again, returning the updated predicate PL, i.e., the updated state of the linking module.
 
 \begin{figure}[h]
   \centering
-  \hspace{.3em}
-  \begin{subfigure}[b]{0.48\textwidth}
+  \begin{subfigure}[b]{0.75\textwidth}
     \centering
     \begin{minipage}{\textwidth}
       \centering
       \inputminted[bgcolor=codebg]{coq} {getc_prepost_short.v}
     \end{minipage}
   \end{subfigure}
-  %% \hspace{3em}
   \hfill
-  \begin{subfigure}[b]{0.42\textwidth}
-    \centering
-    \begin{minipage}{\textwidth}
-      \centering
-      \inputminted[bgcolor=codebg]{coq} {echo_prepost.v}
-    \end{minipage}
-  \end{subfigure}
+  %% \begin{subfigure}[b]{0.42\textwidth}
+  %%   \centering
+  %%   \begin{minipage}{\textwidth}
+  %%     \centering
+  %%     \inputminted[bgcolor=codebg]{coq} {echo_prepost.v}
+  %%   \end{minipage}
+  %% \end{subfigure}
   \begin{subfigure}[b]{0.75\textwidth}
     \centering
     \begin{minipage}{\textwidth}
@@ -209,31 +206,41 @@ The outcome of the ongoing discussions is a notation proposed by Michael Sammler
     \end{minipage}
   \end{subfigure}
   %
-  \caption{code of CompCert (left) and (right)}
-  %\label{fig:design:example3}
+  \caption{Desirable (?) Specification of the call to \texttt{getc}}
+  \label{fig:specs}
 \end{figure}
 
+One interesting detail to point out is the newly introduced \texttt{switch\_linked\_fixed} predicate. The rotation project showed us we should fix the $\Pi$s.
 
+\subsection{Switching Notation}
+
+One other interesting aspect of the rotation is forming an intuition for switches and how to communicate it. In parallel to the actual verification we discussed various ways of annotating things with their pre- and post conditions.
+
+The specifications in \cref{fig:specs} are written in our current favorite notation, proposed by Michael.
+Main points of consideration were the scope of binders, the sequantial nature of the specification (although nested), and the ease of seeing what is an assumption and what requires a proof.
+
+The notation fulfills these criteria, not introducing any parenthesis which may suggest end of a scope of a variable and through indentation suggests sequentiality. The included wand -$\ast$ and separating conjunction $\ast$ immediately suggest the nature of the statements, modularly depending on the position of the statement.
+If we need to prove a switch a \emph{wand} becomes assumption and conjunction obligations, whereas if we have a switch as an assumption, it is the other way around.
 
 \section{Discussion}
 
-Below we discuss the outcome and future directions. We also talk about challenges since it is closely related to future work. The tool should be usuable and one of the goal is to find the right level to talk about.
+The rotation was of a quite explorative nature and there are still many open problems and future directions. Below we discuss the takeaways and the most immediate next steps. Moreover, we talk about the challenges, as this is closely related to communication of intuition and the goal of developing an intuitive proof framework.
 
 \subsection{Outcome}
 
-A simple lemma which allows straight forward reasoning about the \textcolor{red}{compound} operation `TCallRet'.
-We have sucessfully used in in multiple proofs with a straightforward corollary of TWaitingRaw
+First focusing on the concrete outcomes, there is a full proof of the function of interest in the original proof style of DimSum\footnote{} , and both a monolothic\footnote{} and a partially modular\footnote{} proof with the new Hoare-style reasoning.
 
-Fix $\Pi$ upfront, and additional definitions and lemmas about the linking module were added.
+Additionally, we developed a new lemma, allowing for simpler reasoning with the \texttt{TCallRet} operation\footnote{}, specified to new linking definitions for linking with a known module\footnote{} and developed new abstract postconditions capturing the state of the linking module\footnote{}, in order to have fixed $\Pi$s.
+
+This brings us to one of the main insights, namely that there should be one fixed $\Pi$ per module, capturing the state. This is necessary for clean induction, and requires additional ghost state to have a fixed predicate parameterized by the ghost variables, rather than the state of other modules.
 
 \subsection{Challenges \& Future Work}
 
-A top down approach was chosen...
-It is hard to do say what is the correct way to do it. It could have been nice to develop an intuition for switches this way, but didn't happen.
+One of the goals of the rotation, was to develop an intuition for DimSum and it's new, partially finished, reasoning style. The means to achieve this, was in a way top down, immediately starting with the new reasoning mode and trying to fill in details as they come up. It turned out that this was quite challenging, as even in the abstract, the specifications are strongly tied to the way more complex modules, like the linking module, behave.
 
-How to communicate...
+This also closely ties into another challenge, namely how to communicate the work. During the preparation for the presentation it became clear, that it is quite difficult to give insights into the specifications without first giving a somewhat detailed overview of the DimSum framework. It remains an open challenge to find not only a good way to communicate but also to provide infrastructure to write specs that abstract away the peculiarities.
 
-Multilanguage...
+One other open problem is tying all of this into multilanguage, but the main problems are actually more abstract.
 
 \bibliographystyle{splncs04.bst}
 \bibliography{references}
