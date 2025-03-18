@@ -116,7 +116,15 @@ Below we give a spec for a simple echo function with a nested specification. Not
   &\quad\ \ \texttt{putc}\bigl\{\lambda \text{ es POST}_2 \text{, ⌜es = v⌝}\ \ast\ \text{POST}_2 \bigl(\lambda \text{\_, POST}_e\ (\lambda \text{v, ⌜v = 0⌝})\bigr)\bigr\}\Bigr)\biggr\}\Biggr\}
 \end{align*}
 
-
+To transform this into a more modular specification, we can then capture I/O actions as abstract predicates. Below we give an example, where we factor out the spec for getc, capturing reads from a sequence of increasing numbers. Intuitively, the abstract predicate will capture the resource needed to call getc, i.e., $P v$ could stand for ownership of a pointer to a location storing the value v.
+\begin{align*}
+  &\texttt{getc\_spec}(P) \coloneqq\texttt{getc}\bigl\{\lambda \text{ es POST} \text{, $\exists$ v, P v $\ast$ ⌜es = [ ]⌝}\ \ast\\
+  &\ \ \text{POST }(\lambda \text{ ret, ⌜ret = v⌝ $\ast$ P (v + 1)})\bigr\}\\[1em]
+%
+  &\texttt{echo\_spec}(P) \coloneqq\\
+  &\ \ \texttt{echo}\Bigl\{\lambda \text{ es POST}_e \text{, $\exists$ v, P v $\ast$ ⌜es = [ ]⌝ $\ast$ \texttt{getc\_spec}(P)}\ \ast\\
+  &\quad\ \ \texttt{putc}\bigl\{\lambda \text{ es POST}_1 \text{, ⌜es = v⌝}\ \ast\ \text{POST}_1 \bigl(\lambda \text{\_, POST}_e\ (\lambda \text{v, ⌜v = 0⌝})\bigr)\bigr\}\Bigr\}
+\end{align*}
 
 \subsection{DimSum}
 DimSum is a framework for multi-language reasoning realized in the Rocq theorem prover. Program semantics are defined as LTS (modules) which, like in process algebra, interact by synchronizing on events. DimSum allows for interaction between arbitrary modules, as long as they agree on the used events. In particular, this can allow interaction of modules from different languages or specifications. This is achieved by special modules which translate events between two languages. Similarly, two modules can be linked by wrapping them in a special module which captures the outgoing events and potentially synchronizing with a linked module.
