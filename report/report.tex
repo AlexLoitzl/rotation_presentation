@@ -107,21 +107,21 @@
 Below, we briefly present relevant aspects of DimSum\cite{dimsum} and the initial motivation for the project.
 \subsection{Modular I/O Reasoning}
 
-In \cite{io1,io2},  a modular approach based on separation logic for capturing the interactive (I/O) behavior programs is proposed. We build on their approach, but use general abstract nested hoare triples allowing arbitrary nesting, rather than their Petri-net based approach. This allows for specification of functions, in which we can enforce order of calls and most importantly, refer to the output values of functions in deeper nested triples, avoiding to existentially quantify over the value.
+In \cite{io1,io2},  a modular approach based on separation logic for capturing the interactive (I/O) behavior programs is proposed. We build on their approach, but use more general abstract nested hoare triples rather than their approach based on Petri Nets. The arbitrary nesting of triples allows us to write specifications in which we capture the execution order of functions and allows us to refer to previous output values rather than introducing existential quantifiers.
 
-%% \[\left\{\right\} \texttt{getc} \left\{\right\}\]
-\begin{gather*}
-  \Bigl\{\lambda \text{ es POST}{}_e\text{, ⌜es = [ ]⌝} \ast \bigl\{\lambda \text{ es POST}_1\text{, ⌜es = [ ]⌝} \bigr\} \texttt{getc} \bigl\{\lambda \text{ v, } \left\{\lambda \text{ es, ⌜es = v⌝}\right\}\texttt{putc}\left\{\_\right\} \bigr\}\Bigr\}\\
-  \texttt{echo}\\
-  \Bigl\{\lambda \text{v, ⌜v = 0⌝}\Bigr\}
-\end{gather*}
+Below we give a spec for a simple echo function with a nested specification. Note that the binder for the postcondition is a parameter of the specification. In particular, the specification can be read as, \textit{If we call echo with no arguments, then call getc with no arguments, then call putc with the output of getc, echo returns 0}.
+\begin{align*}
+  \texttt{echo}\Biggl\{&\lambda \text{ es POST}{}_e\text{, ⌜es = [ ]⌝}\ \ast\\
+  &\ \ \texttt{getc}\biggl\{\lambda \text{ es POST}{}_1\text{, ⌜es = [ ]⌝}\ \ast\ \text{POST}_1\ \Bigl(\lambda \text{ v, }\\
+  &\quad\ \ \texttt{putc}\bigl\{\lambda \text{ es POST}_2 \text{, ⌜es = v⌝}\ \ast\ \text{POST}_2 \bigl(\lambda \text{\_, POST}_e\ (\lambda \text{v, ⌜v = 0⌝})\bigr)\bigr\}\Bigr)\biggr\}\Biggr\}
+\end{align*}
 
-The motivation for the project comes from works for the VeriFast prover\cite{io1,io2} where I/O reasoning is built into Hoare-style reasoning, rather than handling this outside.
+
+
 \subsection{DimSum}
-DimSum is a framework for multi-language reasoning realized in the Rocq theorem prover. Program semantics are defined as LTS (modules) which can interact with each other by synchronizing on events like Process algebra.
-This way DimSum allows arbitrary interaction between modules as long as they agree on the kind of events. Primitve combinators of modules are used to build complex modules which translate the events such that modules can be linked semantically, or wrapper modules which translate the events from one language to another.
+DimSum is a framework for multi-language reasoning realized in the Rocq theorem prover. Program semantics are defined as LTS (modules) which, like in process algebra, interact by synchronizing on events. DimSum allows for interaction between arbitrary modules, as long as they agree on the used events. In particular, this can allow interaction of modules from different languages or specifications. This is achieved by special modules which translate events between two languages. Similarly, two modules can be linked by wrapping them in a special module which captures the outgoing events and potentially synchronizing with a linked module.
 
-The recent works of introducing Hoare-style reasoning to DimSum are in a sense orthogonal in the sense that we want to abstract as much as possible of this away in order to focus on reasoning about functional correctness of a single module. To combine module-local reasoning and the power of DimSum, the notion of a switch is introduced in order to change from one module to the other. At the moment it requires to know...
+The recently added suppport for Hoare-style reasoning is othogonal to the previous focus of DimSum. Rather than ensuring smooth interaction of modules, we are focusing on the module-local reasoning by abstracting the environment and viewing it abstractly as a postcondition $\Pi$. The Hoare-triples are then parameterized by such a post-condition and the notion of a \texttt{switch} is introduced to impose pre- and post-conditions on the environment. Intuitively, a switch captures a change from module local reasoning to the environment. We will see some examples later.
 
 \section{Rotation Project}
 
