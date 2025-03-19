@@ -97,24 +97,24 @@
 % Abstract: an introduction conveying the general scientific background, research methodology and overall investigation status of the overarching scientific question in the pertinent scientific field
 
 \begin{abstract}
-  Hoare logic provides a framework for modularly reasoning about program behavior and in the more powerful setting of separation logic can be used to verify various low-level aspects of interest like memory-safety and freeness of data-races. In this setting, the input/output behavior of a program has not been paid a lot of attention. Ongoing work in DimSum adds new modular reasoning principles to DimSum, which allow us to capture these I/O properties via abstract predicates.
-  We report on the rotation project which aim was to first gain some insights into DimSum and the tools used in it's proofs and then to turn to experimenting with I/O reasoning. The project revealed some desired conventions on the design of the proof rules, implemented some rules following this new conventions, and opened other interesting questions left for future work.
+  Hoare logic provides a framework for modularly reasoning about program behavior and in the more powerful setting of separation logic can be used to verify various low-level aspects like memory-safety and freeness of data-races. In this setting, the input/output behavior of a program has not received a lot of attention. Ongoing work in DimSum adds new modular reasoning principles to DimSum, which allow us to capture these I/O properties via abstract predicates.
+  We report on the rotation project which aim was to gain some insights into DimSum and the tools used in it's proofs and experiment with I/O reasoning. The project revealed some desired conventions on the design of the proof rules, implemented some rules following this new conventions, and opened other interesting questions left for future work.
 \end{abstract}
 
 \section{Background}
 Below, we briefly present relevant aspects of DimSum\cite{dimsum} and the initial motivation for the project.
 \subsection{Modular I/O Reasoning}
 
-In \cite{io1,io2},  a modular approach based on separation logic for capturing the interactive (I/O) behavior of programs is proposed. We build on their approach, but use more general abstract nested hoare triples rather than basing it on Petri Nets. By arbitrarily nesting specifications, we capture the execution order of functions and can refer to previous output values, thereby omiting the need for existential quantifiers.
+In \cite{io1,io2},  a modular approach based on separation logic for capturing the interactive (I/O) behavior of programs is proposed. DimSum builds on this approach, but uses more general abstract nested hoare triples rather than basing it on Petri Nets. By arbitrarily nesting specifications, it can capture the execution order of functions and can refer to previous output values, thereby omiting the need for existential quantifiers.
 
-Below we give a spec for a simple \texttt{echo} function with a nested specification. We cannot use the familiar style of triples, but rather pass the binder for the postcondition as an argument for scoping. The specification can be read as, \textit{If we call } \texttt{echo} \textit{with no arguments, then call} \texttt{getc} \textit{with no arguments, then call }\texttt{\text{putc}} \textit{with the output of }\texttt{getc}, \texttt{echo} \textit{returns 0}.
+Below we give a spec for a simple \texttt{echo} function with a nested specification. We cannot use the familiar style of triples, but rather pass the binder for the postcondition as an argument for scoping reasons. The specification can be read as, \textit{If we call } \texttt{echo} \textit{with no arguments, then call} \texttt{getc} \textit{with no arguments, then call }\texttt{\text{putc}} \textit{with the output of }\texttt{getc}, \texttt{echo} \textit{returns 0}.
 \begin{align*}
   \texttt{echo}\Biggl\{&\lambda \text{ es POST}{}_e\text{, ⌜es = [ ]⌝}\ \ast\\
   &\ \ \texttt{getc}\biggl\{\lambda \text{ es POST}{}_1\text{, ⌜es = [ ]⌝}\ \ast\ \text{POST}_1\ \Bigl(\lambda \text{ v, }\\
   &\quad\ \ \texttt{putc}\bigl\{\lambda \text{ es POST}_2 \text{, ⌜es = v⌝}\ \ast\ \text{POST}_2 \bigl(\lambda \text{\_, POST}_e\ (\lambda \text{v, ⌜v = 0⌝})\bigr)\bigr\}\Bigr)\biggr\}\Biggr\}
 \end{align*}
 
-To transform this into a more modular specification, we can then capture I/O actions as abstract predicates. Below we give an example, where we factor out the spec for \texttt{getc} as each call reading from a sequence of increasing numbers. Intuitively, the abstract predicate will capture the resource needed to call \texttt{getc}, i.e., P v could stand for ownership of a pointer to a location storing the value v.
+To transform this into a more modular specification, we can then capture I/O actions as abstract predicates. Below we give an example, where we factor out a specification for \texttt{getc} as a function reading from a sequence of increasing numbers. Intuitively, the abstract predicate will capture the resource needed to call \texttt{getc}, i.e., P v could stand for ownership of a pointer to a location storing the value v.
 \begin{align*}
   &\texttt{getc\_spec}(P) \coloneqq\texttt{getc}\bigl\{\lambda \text{ es POST} \text{, $\exists$ v, P v $\ast$ ⌜es = [ ]⌝}\ \ast\\
   &\ \ \text{POST }(\lambda \text{ ret, ⌜ret = v⌝ $\ast$ P (v + 1)})\bigr\}\\[1em]
@@ -125,13 +125,13 @@ To transform this into a more modular specification, we can then capture I/O act
 \end{align*}
 
 \subsection{DimSum}
-DimSum is a framework for multi-language reasoning realized in the Rocq theorem prover. Program semantics are defined as LTS (modules) which, like in process algebra, interact by synchronizing on events. DimSum allows for interaction between arbitrary modules, as long as they agree on the used events. In particular, this can allow interaction of two modules from different languages or with specifications. This is achieved by special modules which translate events between two languages. Similarly, two modules can be linked by wrapping them in a special module which can synchronize events between the contained modules.
+DimSum is a framework for multi-language reasoning realized in the Rocq theorem prover. Program semantics are defined as LTS (modules) which, like in process algebra, interact by synchronizing on events. Any two modules can interact, as long as they agree on the used events. In particular, this can allow interaction of two modules from different languages or with specifications. This is achieved by special modules which translate events between two languages. Similarly, two modules can be linked by wrapping them in a special module which may synchronize events between the contained modules.
 
-The recently added suppport for Hoare-style reasoning is othogonal to the previous focus of DimSum. Rather than ensuring smooth interaction of modules, the focus shift to module-local reasoning by abstracting the environment as a postcondition $\Pi$. The Hoare-triples are then parameterized by such a post-condition and the notion of a \texttt{switch} is introduced to impose pre- and post-conditions on the environment. Intuitively, a switch captures a change from module local reasoning to the environment. We will see some examples later.
+The recently added suppport for Hoare-style reasoning is othogonal to the previous focus of DimSum. Rather than ensuring smooth interaction of modules, the focus shift to module-local reasoning by abstracting the environment as a postcondition $\Pi$. The Hoare-triples are then parameterized by such an abstract post-condition and the notion of a \texttt{switch} is introduced to impose pre- and post-conditions on the environment. Intuitively, a switch captures a change from module local reasoning to the environment. We will see some examples later.
 
 \section{Rotation Project}\label{sec:proj}
 
-The main objective of the rotation (as stated in the pre-rotation protocol) was to get familiar with DimSum and the tools used in its design. This includes the SSreflect tactic language, the Iris Proof Mode (and Separation logic), and carrying out proofs in both the original and the new modular proof styles.
+The main objective of the rotation (as stated in the pre-rotation protocol) was to get familiar with DimSum and the tools used in its design. This includes the SSreflect tactic language, the Iris Proof Mode\cite{iris} (and Separation logic), and carrying out proofs in both the original and the new modular proof styles.
 
 Small example programs, moslty with I/O behavior, but also some memory management and recursion, served as an incremental way to get introduced to the new topics. Rather quickly, the main challenge became clear: Writing a fully modular specification for a recursive program with I/O.
 
@@ -140,7 +140,7 @@ Small example programs, moslty with I/O behavior, but also some memory managemen
 The main challenge was to prove that a linked module consisting of a Rec program \texttt{echo} and a Spec program \texttt{getc} refines a Spec program \texttt{echo\_getc} as stated below, where we write $\oplus$ for \emph{semantic linking} of two modules.
 \[(\texttt{echo} \oplus \texttt{getc}) \preceq \texttt{echo\_getc}\]
 
-The programs are defined in \cref{fig:def}, where most notably, \texttt{echo} calls \texttt{getc} and uses the output as argument for \texttt{putc} and then recurses. The proof of the refinement has two patterns of interaction between the modules. One is the call of \texttt{getc} which is handled by the linking module, the other, an external call to \texttt{putc}, which is a emited as visible events for both the program and the specification.
+The programs are defined in \cref{fig:def}, where most notably, \texttt{echo} calls \texttt{getc} and uses the output as argument for \texttt{putc} and then recursively calls echo. The proof of the refinement has two patterns of interaction between the modules. One is the call of \texttt{getc} which is handled by the linking module, the other, an external call to \texttt{putc}, which is a emited as visible events for both the program and the specification.
 
 \begin{figure}[h]
   \centering
@@ -177,7 +177,7 @@ The proof itself is quite straightforward in the original proof style of DimSum,
 
 The main challenge is writing a fully modular specification, i.e., stating specifications for the different calls. The difficulty lies in the correct abstraction of the ownership resources needed to perform calls across modules. The recursive nature of the program requires one to correctly return all resources in order to be able to use the inductive hypothesis.
 
-\cref{fig:specs} contains a concrete specification, which specifies the behavior of calls to \texttt{getc} from the Rec module. The conclusion states that there is some abstract predicate P, that we know holds for 0 (the starting point of the increasing sequence \texttt{getc} reads from), and then get a persistent statement that if we own this predicate for some value v, then a call of \texttt{getc} returns this value and gives back ownership of P (v + 1). In the premise, we require some other abstract predicate (which captures the state of the linking module) and additionally a hypothesis \texttt{switch\_linked\_fixed} which constrains $\Pi_r$ and $\Pi_l$ (the environment when reasoning locally in the \texttt{echo} and \texttt{getc} modules respectively). The hypothesis states, that we can switch out of the Rec module, into the spec module and back again, returning the updated predicate PL, i.e., the updated state of the linking module.
+To give a concrete example, \cref{fig:specs} contains a concrete specification, which specifies the behavior of calls to \texttt{getc} from the Rec module. The conclusion states that there is some abstract predicate P, that we know holds for 0 (the starting point of the increasing sequence \texttt{getc} reads from), and then get a persistent statement that if we own this predicate for some value v, then a call of \texttt{getc} returns this value and gives back ownership of P (v + 1). In the premise, we require some other abstract predicate PL (which captures the state of the linking module) and additionally a hypothesis \texttt{switch\_linked\_fixed} which constrains $\Pi_r$ and $\Pi_l$ (the postconditions capturing the environment when reasoning locally in the \texttt{echo} and \texttt{getc} modules respectively). The hypothesis states, that we can switch out of the Rec module, into the spec module and back again, returning the updated predicate PL, i.e., the updated state of the linking module.
 
 \begin{figure}[h]
   \centering
@@ -208,7 +208,7 @@ The main challenge is writing a fully modular specification, i.e., stating speci
   \label{fig:specs}
 \end{figure}
 
-One interesting detail to point out is the newly introduced \texttt{switch\_linked\_fixed} predicate. The rotation project showed us we should fix the $\Pi$s.
+One interesting detail to point out is the newly introduced \texttt{switch\_linked\_fixed} predicate, which fixes the postcondition for the module being switched to.
 
 \subsection{Switching Notation}
 
@@ -217,29 +217,32 @@ One other interesting aspect of the rotation is forming an intuition for switche
 The specifications in \cref{fig:specs} are written in our current favorite notation, proposed by Michael.
 Main points of consideration were the scope of binders, the sequantial nature of the specification (although nested), and a clear separation of assumption and obligations.
 
-The notation fulfills these criteria by omiting parenthesis avoiding prematurely implying the end of scoping and the indentation suggests sequentiality. The included wand -$\ast$ and separating conjunction $\ast$ suggest the kind of statement (assumption vs. obligation) correctly, independently of the position of the switch.
-If we need to prove a switch a \emph{wand} becomes assumption and conjunction obligations, whereas if we have a switch as an assumption, it is the other way around.
+The notation fulfills these criteria by omiting parenthesis, thereby avoiding prematurely implying the end of scoping, and the indentation levels suggest sequentiality. The included wand -$\ast$ and separating conjunction $\ast$ suggest the kind of statement (assumption vs. obligation) correctly, independently of the position of the switch.
+If we need to prove a switch a wand becomes assumption and conjunction obligations, whereas if we have a switch as an assumption, it is the other way around.
 
 \section{Discussion}
 
-The rotation was of a quite explorative nature and there are still many open problems and future directions. Below we discuss the takeaways and the most immediate next steps.
+The rotation was of explorative nature and there are still many open problems and future directions. Below we discuss the takeaways and the most immediate next steps.
 
 \subsection{Outcome}
 
-First focusing on the concrete outcomes, we succesfully proved the refinement stated in \cref{sec:proj} in the original proof style of DimSum\footnote{}, and both a monolothic\footnote{} and a partially modular\footnote{} proof with the new Hoare-style reasoning.
+First focusing on the concrete outcomes, we succesfully proved the refinement stated in \cref{sec:proj} in the original proof style of DimSum\footnote{\url{https://github.com/AlexLoitzl/dim_sum_playground/blob/alex_experiments/dimsum_examples/echo_original.v}}, and both a monolothic\footnote{\url{https://github.com/AlexLoitzl/dim_sum_playground/blob/alex_experiments/dimsum_examples/iris/echo_noswitch.v}} and a partially modular\footnote{\url{https://github.com/AlexLoitzl/dim_sum_playground/blob/alex_experiments/dimsum_examples/iris/final_echo.v}} proof with the new Hoare-style reasoning.
 
-Additionally, we developed a new lemma, allowing for simpler reasoning with the \texttt{TCallRet} operation\footnote{}, specified new definition for switching to known modules\footnote{} and developed new abstract postconditions for abstracting over the the state of the linking module\footnote{}.
+Additionally, we developed a new lemma, allowing for simpler reasoning with the \texttt{TCallRet} operation\footnote{\url{https://github.com/AlexLoitzl/dim_sum_playground/blob/baf0a8609ee2f426669947c938efbd3f2c084e9f/dimsum_examples/iris/final_echo.v\#L40}}, specified new definition for switching to known modules\footnote{\url{https://github.com/AlexLoitzl/dim_sum_playground/blob/baf0a8609ee2f426669947c938efbd3f2c084e9f/dimsum/iris/expr2.v\#L127}}, and developed new abstract postconditions for abstracting over the the state of the linking module\footnote{\url{https://github.com/AlexLoitzl/dim_sum_playground/blob/baf0a8609ee2f426669947c938efbd3f2c084e9f/dimsum/iris/combinators.v\#L559}}.
 
 This brings us to one of the main insights, namely that there should be one such fixed abstract postcondition $\Pi$ per module. This is eases the specifications and can be necessary for induction.
 
 \subsection{Challenges \& Future Work}
 
-One of the goals of the rotation, was to develop an intuition for DimSum and it's new, partially finished, reasoning style. The means to achieve this, was in a way top down, immediately starting with the new reasoning mode and trying to fill in details as they come up. It turned out that this was quite challenging, as even in the abstract, the specifications are strongly tied to the way more complex modules, like the linking module, behave.
+One of the goals of the rotation, was to develop an intuition for DimSum and it's new, partially finished, reasoning style. The exploration was initially set out to be top down, immediately starting with the new reasoning mode, but this was not succesful. While it could have given some interesting insights developing an intuition for switches this way, the current way specifications need to be stated is strongly tied to the inner workings of complex modules, like the linking module.
 
-This also closely ties into another challenge, namely how to communicate the work. During the preparation for the presentation it became clear, that it is quite difficult to give insights into the specifications without first giving a somewhat detailed overview of the DimSum framework. It remains an open challenge to find not only a good way to communicate but also to provide infrastructure to write specs that abstract away the peculiarities.
+Nevertheless, this is an interesting insight into the challenge of getting the abstraction level correct. Moreover, it also shows that it is quite difficult, as also appearant during the final presentation, to communicate technical insights into the new proof style without first talking giving a detailed recount of the original proof style.
 
-One open problem is the specification in \cref{fig:specs}. It is a quite strong specification, which is still open if we can use it as such.
+There are many interesting open problems in progressing the abstraction, but below we focus on the immediate next steps following the project. One open problem is the specification in \cref{fig:specs}, which I have not been able to succesfully use.
+It is quite strong, as it captures the resources of the linking module, but is a specification for a call in a submodule (the \texttt{echo} module). The same resources are also necessary to later perform the call to \texttt{putc}, hence some sharing is necessary. It is yet to be determined if the specification can be used as such, or if it needs to be weakened.
+
 The newly introduced notation is yet to be implemented in Rocq and used in action.
+
 
 \bibliographystyle{splncs04.bst}
 \bibliography{references}
